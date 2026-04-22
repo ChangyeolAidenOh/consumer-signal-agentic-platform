@@ -1,0 +1,352 @@
+[
+  {
+    "id": 1,
+    "query": "안티트로가 헤드앤숄더 검색량을 역전한 시점은?",
+    "expected_type": "trend",
+    "reference": "2025년 6월 (ratio 1.027)",
+    "eval_criteria": "must mention June 2025 as reversal point"
+  },
+  {
+    "id": 2,
+    "query": "2026년 4월 기준 안티트로 대 헤드앤숄더 비율은?",
+    "expected_type": "trend",
+    "reference": "1.327",
+    "eval_criteria": "must mention ratio 1.327"
+  },
+  {
+    "id": 3,
+    "query": "안티트로가 네이버 쇼핑 검색에 처음 등장한 시점은?",
+    "expected_type": "trend",
+    "reference": "2024년 12월",
+    "eval_criteria": "must mention December 2024"
+  },
+  {
+    "id": 4,
+    "query": "헤드앤숄더 클리니컬 스트렝스의 검색량 추이는?",
+    "expected_type": "trend",
+    "reference": "2021년 평균 35.9에서 2026년 0.0으로 사실상 소멸",
+    "eval_criteria": "must indicate Clinical Strength collapsed or disappeared"
+  },
+  {
+    "id": 5,
+    "query": "2026년 샴푸 카테고리 전체 검색량은 증가했나 감소했나?",
+    "expected_type": "trend",
+    "reference": "2026년 +14.6% 증가, 그러나 안티트로가 주도한 성장이며 HNS는 수혜 없음",
+    "eval_criteria": "must mention category growth but clarify HNS is not benefiting"
+  },
+  {
+    "id": 6,
+    "query": "Chronos 모델의 헤드앤숄더 12개월 예측 결과는?",
+    "expected_type": "trend",
+    "reference": "median 47-54, 80% CI 하한 약 49, 상한 약 59. 평탄한 궤적, 자연 회복 없음",
+    "eval_criteria": "must mention flat forecast with no organic recovery"
+  },
+  {
+    "id": 7,
+    "query": "안티트로 검색량이 가장 급격히 증가한 단일 월은?",
+    "expected_type": "trend",
+    "reference": "2026년 1월, +40.2 단일월 증가 (76개월 전체 최대)",
+    "eval_criteria": "must mention January 2026 and +40.2"
+  },
+  {
+    "id": 8,
+    "query": "닥터그루트의 검색량은 2020년 대비 얼마나 감소했나?",
+    "expected_type": "trend",
+    "reference": "-87.8%",
+    "eval_criteria": "must mention approximately 87-88% decline"
+  },
+  {
+    "id": 9,
+    "query": "비듬샴푸 키워드 검색량은 어떻게 변했나?",
+    "expected_type": "trend",
+    "reference": "2020년 평균 41.2에서 2026년 32.5로 -21.3% 감소",
+    "eval_criteria": "must indicate decline in dandruff shampoo searches"
+  },
+  {
+    "id": 10,
+    "query": "지루성두피샴푸 키워드의 변화 추이는?",
+    "expected_type": "trend",
+    "reference": "2020년 13.7에서 2026년 5.8로 -57.6% 감소",
+    "eval_criteria": "must indicate significant decline"
+  },
+  {
+    "id": 11,
+    "query": "소비자들이 헤드앤숄더에서 이탈하는 주된 이유는?",
+    "expected_type": "mixed",
+    "reference": "가려움 291건, 자극 90건, 뾰루지 63건이 주요 이탈 원인",
+    "eval_criteria": "must mention itchiness/irritation/breakouts with approximate counts"
+  },
+  {
+    "id": 12,
+    "query": "경쟁사를 언급한 소비자의 이탈률은?",
+    "expected_type": "voc",
+    "reference": "경쟁사 언급 문서 이탈률 82.2% vs 비언급 20.4%",
+    "eval_criteria": "must mention ~82% vs ~20% contrast"
+  },
+  {
+    "id": 13,
+    "query": "전체 VoC에서 이탈위험 신호 비율은?",
+    "expected_type": "voc",
+    "reference": "약 24% (418/1744)",
+    "eval_criteria": "must mention approximately 24%"
+  },
+  {
+    "id": 14,
+    "query": "안티트로를 언급한 VoC는 몇 건이나 되나?",
+    "expected_type": "voc",
+    "reference": "competitor_mentioned=True가 101건",
+    "eval_criteria": "must mention approximately 101 documents"
+  },
+  {
+    "id": 15,
+    "query": "유튜브에서 수집된 VoC는 몇 건인가?",
+    "expected_type": "voc",
+    "reference": "1,386건 (raw), 필터 후 수는 소스별 분포에서 확인",
+    "eval_criteria": "must provide YouTube document count"
+  },
+  {
+    "id": 16,
+    "query": "블로그에서의 이탈 신호가 다른 채널 대비 특이한 점은?",
+    "expected_type": "voc",
+    "reference": "블로그는 긴 사용 후기 기반으로 성분 분석, 효능 비교가 많음. Active Switcher의 주 채널",
+    "eval_criteria": "must mention blog as primary channel for detailed reviews or switching"
+  },
+  {
+    "id": 17,
+    "query": "헤드앤숄더에 만족하는 소비자들은 어떤 점을 좋아하나?",
+    "expected_type": "voc",
+    "reference": "비듬 제거 효과, 가성비, 쿨링감 등 긍정 신호",
+    "eval_criteria": "must mention positive aspects from VoC data"
+  },
+  {
+    "id": 18,
+    "query": "헤드앤숄더 차콜 라인에 대한 소비자 반응은?",
+    "expected_type": "voc",
+    "reference": "VoC에서 차콜 관련 언급 존재, 트렌드에서 차콜 검색량 확인 가능",
+    "eval_criteria": "must reference charcoal line consumer opinions"
+  },
+  {
+    "id": 19,
+    "query": "소비자들이 성분에 대해 우려하는 구체적 키워드는?",
+    "expected_type": "voc",
+    "reference": "설페이트, 계면활성제, 약산성 등",
+    "eval_criteria": "must mention sulfate or surfactant related concerns"
+  },
+  {
+    "id": 20,
+    "query": "안티트로와 헤드앤숄더를 직접 비교한 후기의 주요 내용은?",
+    "expected_type": "voc",
+    "reference": "안티트로의 피부과/약국 채널 신뢰, 성분 차이, 효능 비교 등",
+    "eval_criteria": "must mention direct comparison content from VoC"
+  },
+  {
+    "id": 21,
+    "query": "At-risk 세그먼트의 크기와 특징은?",
+    "expected_type": "switching",
+    "reference": "91건(5.2%), churn_rate 1.0, competitor_rate 0.0, ingredient/medical frame 채택",
+    "eval_criteria": "must mention 91 docs, 100% churn, 0% competitor, frame adoption"
+  },
+  {
+    "id": 22,
+    "query": "Active Switcher 세그먼트의 특징은?",
+    "expected_type": "switching",
+    "reference": "83건(4.8%), churn_rate 1.0, competitor_rate 1.0, switching_probability 0.405",
+    "eval_criteria": "must mention 83 docs, both churn and competitor at 1.0"
+  },
+  {
+    "id": 23,
+    "query": "Loyal 세그먼트의 규모와 특징은?",
+    "expected_type": "switching",
+    "reference": "346건(19.8%), churn_rate 0.0, switching_probability 0.0",
+    "eval_criteria": "must mention 346 docs, zero churn"
+  },
+  {
+    "id": 24,
+    "query": "Passive User는 전체의 몇 퍼센트인가?",
+    "expected_type": "switching",
+    "reference": "1,224건, 70.2%",
+    "eval_criteria": "must mention ~70% or 1224 docs"
+  },
+  {
+    "id": 25,
+    "query": "전체 브랜드 리스크 스코어는?",
+    "expected_type": "switching",
+    "reference": "0.068 (세그먼트 크기 가중 평균)",
+    "eval_criteria": "must mention 0.068 or approximately 7%"
+  },
+  {
+    "id": 26,
+    "query": "At-risk 세그먼트에 대한 권장 대응 전략은?",
+    "expected_type": "switching",
+    "reference": "ingredient transparency content, medical frame alignment",
+    "eval_criteria": "must mention ingredient transparency or medical frame strategy"
+  },
+  {
+    "id": 27,
+    "query": "Active Switcher에 대한 권장 대응 전략은?",
+    "expected_type": "switching",
+    "reference": "direct competitive messaging, 즉각 대응 필요",
+    "eval_criteria": "must mention immediate intervention or competitive messaging"
+  },
+  {
+    "id": 28,
+    "query": "switching probability가 가장 높은 세그먼트는?",
+    "expected_type": "switching",
+    "reference": "Active Switcher (0.405)",
+    "eval_criteria": "must identify Active Switcher with ~0.40 probability"
+  },
+  {
+    "id": 29,
+    "query": "trend_multiplier 계산에 사용된 가중치는?",
+    "expected_type": "switching",
+    "reference": "w_antitro=0.50, w_hns=0.40, grid search로 결정",
+    "eval_criteria": "must mention the weight values"
+  },
+  {
+    "id": 30,
+    "query": "Logistic Regression의 CV 정확도는?",
+    "expected_type": "switching",
+    "reference": "0.9300 ± 0.0135 (stratified 5-fold)",
+    "eval_criteria": "must mention ~0.93 accuracy"
+  },
+  {
+    "id": 31,
+    "query": "이탈 위험이 높은 소비자들의 검색 트렌드 변화는?",
+    "expected_type": "mixed",
+    "reference": "VoC 이탈 신호 증가와 안티트로 검색량 증가가 동기화됨",
+    "eval_criteria": "must connect VoC churn signals with Antitro search trend"
+  },
+  {
+    "id": 32,
+    "query": "안티트로 성장과 VoC 이탈 신호의 관계는?",
+    "expected_type": "mixed",
+    "reference": "안티트로 검색량 급증 시기와 VoC 이탈률 상승이 시간적으로 일치",
+    "eval_criteria": "must establish temporal correlation between Antitro growth and churn"
+  },
+  {
+    "id": 33,
+    "query": "카테고리 성장에도 불구하고 헤드앤숄더가 위험한 이유는?",
+    "expected_type": "mixed",
+    "reference": "카테고리 성장은 안티트로가 주도, 비듬샴푸/지루성 키워드는 감소, HNS는 수혜 없음",
+    "eval_criteria": "must explain category growth is driven by Antitro, not HNS"
+  },
+  {
+    "id": 34,
+    "query": "소비자 프레임 전환이란 무엇이고 어떤 증거가 있나?",
+    "expected_type": "mixed",
+    "reference": "비듬샴푸 → 안티트로샴푸로 검색 키워드 자체가 바뀌는 현상. VoC에서 ingredient/medical frame 채택 증가",
+    "eval_criteria": "must explain frame shift concept with keyword migration evidence"
+  },
+  {
+    "id": 35,
+    "query": "유튜브 채널에서의 경쟁사 비교가 중요한 이유는?",
+    "expected_type": "mixed",
+    "reference": "유튜브에서 성분 비교/구매 결정이 이루어짐. BERTopic Topic 1에서 YouTube 237건 vs Blog 18건",
+    "eval_criteria": "must mention YouTube as key channel for competitive comparison"
+  },
+  {
+    "id": 36,
+    "query": "LDA 토픽 모델링에서 가장 높은 coherence를 보인 조합은?",
+    "expected_type": "voc",
+    "reference": "blog + bigram, coherence 0.6177",
+    "eval_criteria": "must mention blog bigram with ~0.62 coherence"
+  },
+  {
+    "id": 37,
+    "query": "BERTopic에서 몇 개의 토픽이 생성되었나?",
+    "expected_type": "voc",
+    "reference": "min_topic_size=8에서 17개 토픽",
+    "eval_criteria": "must mention 17 topics"
+  },
+  {
+    "id": 38,
+    "query": "LDA와 BERTopic 교차 검증에서 합의된 신호는 몇 개인가?",
+    "expected_type": "voc",
+    "reference": "12개 High Confidence 신호",
+    "eval_criteria": "must mention 12 consensus signals"
+  },
+  {
+    "id": 39,
+    "query": "전처리에서 두피를 불용어로 제거한 이유는?",
+    "expected_type": "voc",
+    "reference": "모든 LDA 토픽에서 0.1+ 가중치로 출현, 토픽 구별력 없음",
+    "eval_criteria": "must explain scalp appeared in all topics with high weight"
+  },
+  {
+    "id": 40,
+    "query": "adj_noun 모드가 실패한 이유는?",
+    "expected_type": "voc",
+    "reference": "한국어 두피 VoC는 형용사-명사가 아닌 명사+동사 구조가 지배적, 30건 미만으로 불충분",
+    "eval_criteria": "must mention Korean VoC linguistic structure difference"
+  },
+  {
+    "id": 41,
+    "query": "헤드앤숄더의 가장 시급한 대응 과제는?",
+    "expected_type": "mixed",
+    "reference": "유튜브에 임상 신뢰성 콘텐츠 배포 — 성분 비교 질문에 선제 대응",
+    "eval_criteria": "must mention YouTube clinical credibility content as immediate action"
+  },
+  {
+    "id": 42,
+    "query": "중기(3-6개월) 대응 과제는?",
+    "expected_type": "mixed",
+    "reference": "효능 실패 신호 대응 — 가려움 291건, 자극 90건의 근본 원인 해결",
+    "eval_criteria": "must mention efficacy failure as medium-term priority"
+  },
+  {
+    "id": 43,
+    "query": "장기(6-12개월) 구조적 과제는?",
+    "expected_type": "mixed",
+    "reference": "채널 신뢰성 전략 — 안티트로의 병원/약국 채널 우위에 대응",
+    "eval_criteria": "must mention channel credibility gap with hospital/pharmacy"
+  },
+  {
+    "id": 44,
+    "query": "수집된 전체 VoC 문서 수는?",
+    "expected_type": "voc",
+    "reference": "raw 2,714건, HNS 관련성 필터 후 1,744건",
+    "eval_criteria": "must mention 2714 raw and 1744 filtered"
+  },
+  {
+    "id": 45,
+    "query": "KMeans 클러스터링이 채택되지 않은 이유는?",
+    "expected_type": "switching",
+    "reference": "At-risk 91건이 Passive User 클러스터에 전부 흡수됨. 비지도학습으로는 미묘한 프레임 신호 구분 불가",
+    "eval_criteria": "must mention At-risk absorbed into Passive User clusters"
+  },
+  {
+    "id": 46,
+    "query": "Layer 2에서 ML 분류가 실패한 이유는?",
+    "expected_type": "trend",
+    "reference": "12개 risk 레이블이 시계열 마지막 12개월에 몰려있어 학습 데이터에 양성 샘플 0개",
+    "eval_criteria": "must mention zero positive samples in training set"
+  },
+  {
+    "id": 47,
+    "query": "데이터에서 확인할 수 없는 한계는?",
+    "expected_type": "mixed",
+    "reference": "1) 안티트로 검색량은 관심이지 구매가 아님 2) At-risk의 이탈까지 소요 시간 측정 불가",
+    "eval_criteria": "must mention at least one limitation from the analysis"
+  },
+  {
+    "id": 48,
+    "query": "Chronos를 선택한 이유는? 다른 대안은?",
+    "expected_type": "trend",
+    "reference": "76개 관측치로 fine-tuning 불가 → zero-shot Chronos 선택. ARIMA는 구시대, TFT/PatchTST는 데이터 부족",
+    "eval_criteria": "must mention zero-shot advantage with limited data"
+  },
+  {
+    "id": 49,
+    "query": "현재 헤드앤숄더 모멘텀은?",
+    "expected_type": "trend",
+    "reference": "current_hns_momentum = -0.237 (하락세)",
+    "eval_criteria": "must mention negative momentum"
+  },
+  {
+    "id": 50,
+    "query": "이 분석의 전략적 결론을 한 마디로 요약하면?",
+    "expected_type": "mixed",
+    "reference": "카테고리 자체가 재정의되고 있으며, 소비자 프레임이 비듬샴푸에서 더마/클리닉 솔루션으로 전환 중",
+    "eval_criteria": "must mention category redefinition or frame shift"
+  }
+]

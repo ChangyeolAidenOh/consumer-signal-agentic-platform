@@ -12,20 +12,24 @@ LLM = ChatOllama(model="llama3.1:8b", temperature=0)
 
 def router(state: AgentState) -> AgentState:
     """Classify query into type: voc, trend, switching, or mixed."""
-    prompt = f"""Classify this query into one category.
+    prompt = f"""Classify this query into one category. Read the rules carefully.
 
     Categories:
-    - voc: consumer reviews, complaints, opinions, product experience
-    - trend: search volume, market share, Antitro reversal, timeline, numbers over time
-    - switching: segments, switching probability, at-risk, intervention
-    - mixed: needs both consumer reviews AND trend numbers
+    - voc: consumer reviews, complaints, opinions, product experience, VoC data, document counts
+    - trend: search volume numbers, market share over time, Antitro vs HNS ratio, forecast, timeline
+    - switching: segments (Active Switcher, At-risk, Passive User, Loyal), switching probability, risk score, intervention strategy
+    - mixed: needs BOTH consumer data AND trend/segment data, strategic recommendations, cross-layer analysis
+    - methodology: about analysis methods (LDA, BERTopic, Chronos, KMeans, preprocessing, coherence, model selection)
 
     Query: {state['query']}
 
-    Rules:
-    - If the query mentions "역전" (reversal), "검색량" (search volume), "추이" (trend), "시점" (timing), answer "trend"
-    - If the query mentions "후기" (review), "불만" (complaint), "효과" (efficacy), answer "voc"
-    - If the query mentions "세그먼트" (segment), "이탈 확률" (switching probability), answer "switching"
+    Classification rules (apply in order):
+    1. If query contains VoC, 후기, 리뷰, 소비자, 불만, 성분, 반응, 채널, 블로그, 유튜브, 수집, 문서 수, 건수 → "voc"
+    2. If query contains 세그먼트, segment, At-risk, Active Switcher, Loyal, Passive, 이탈 확률, switching, probability, 리스크 스코어, risk score, 대응 전략, intervention, 가중치, multiplier, Logistic → "switching"
+    3. If query contains 검색량, 역전, ratio, 추이, trend, 모멘텀, forecast, 예측, 카테고리 클릭 → "trend"
+    4. If query contains LDA, BERTopic, coherence, 토픽, KMeans, Chronos, 전처리, 불용어, 모드, 방법론 → "methodology"
+    5. If query asks for strategic conclusion, 대응 과제, 시사점, 한계, limitations, 종합, 요약 → "mixed"
+    6. Default: "mixed"
 
     Answer with ONE word only:"""
 
@@ -77,6 +81,17 @@ def retriever(state: AgentState) -> AgentState:
         q = query.lower()
         if any(kw in q for kw in ["이탈", "불만", "이유", "원인"]):
             sql_result = query_canned("churn_reasons")
+
+    elif query_type == "methodology":
+        q = query.lower()
+        if any(kw in q for kw in ["lda", "coherence", "토픽 모델"]):
+            sql_result = query_canned("lda_coherence")
+        elif any(kw in q for kw in ["bertopic", "bert"]):
+            sql_result = query_canned("bertopic_summary")
+        elif any(kw in q for kw in ["합의", "consensus", "교차"]):
+            sql_result = query_canned("consensus_signals")
+        else:
+            sql_result = query_canned("lda_coherence")
 
     return {**state, "retrieved_docs": retrieved_docs, "sql_result": sql_result}
 

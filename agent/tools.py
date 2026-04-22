@@ -167,6 +167,23 @@ CANNED_QUERIES = {
         GROUP BY 1
         ORDER BY cnt DESC NULLS FIRST
         """,
+    "lda_coherence": """
+        SELECT source, mode, optimal_k, coherence, keywords
+        FROM lda_topics
+        ORDER BY coherence DESC
+        LIMIT 10
+    """,
+    "bertopic_summary": """
+        SELECT bertopic_id, COUNT(*) AS doc_count
+        FROM bertopic_documents
+        GROUP BY bertopic_id
+        ORDER BY bertopic_id
+    """,
+    "consensus_signals": """
+        SELECT lda_topic, bertopic_id, overlap_keywords, bertopic_count, confidence
+        FROM lda_bertopic_consensus
+        ORDER BY bertopic_count DESC
+    """,
 }
 
 
