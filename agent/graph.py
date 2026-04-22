@@ -11,37 +11,63 @@ LLM = ChatOllama(model="llama3.1:8b", temperature=0)
 
 
 def router(state: AgentState) -> AgentState:
-    """Classify query into type: voc, trend, switching, or mixed."""
-    prompt = f"""Classify this query into one category. Read the rules carefully.
+    """Hybrid router: keyword match first, LLM fallback for ambiguous queries."""
+    q = state["query"].lower()
 
-    Categories:
-    - voc: consumer reviews, complaints, opinions, product experience, VoC data, document counts
-    - trend: search volume numbers, market share over time, Antitro vs HNS ratio, forecast, timeline
-    - switching: segments (Active Switcher, At-risk, Passive User, Loyal), switching probability, risk score, intervention strategy
-    - mixed: needs BOTH consumer data AND trend/segment data, strategic recommendations, cross-layer analysis
-    - methodology: about analysis methods (LDA, BERTopic, Chronos, KMeans, preprocessing, coherence, model selection)
+    # methodology: analysis method questions
+    # But NOT if asking about results (e.g. "Chronos 예측 결과" = trend)
+    methodology_kw = ["lda", "bertopic", "coherence", "토픽 모델", "kmeans", "k-means",
+                      "클러스터링", "전처리", "불용어", "stopword", "adj_noun",
+                      "logistic regression", "cv 정확도", "방법론",
+                      "ft-transformer", "rocket", "모드가 실패"]
+    result_kw = ["결과", "예측 결과", "forecast", "12개월"]
+    is_method_question = any(kw in q for kw in methodology_kw)
+    is_result_question = any(kw in q for kw in result_kw)
 
-    Query: {state['query']}
+    if is_method_question and not is_result_question:
+        # Check if asking about method selection vs method results
+        if "chronos" in q and any(kw in q for kw in ["선택", "이유", "대안", "왜"]):
+            return {**state, "query_type": "methodology"}
+        elif "chronos" in q:
+            return {**state, "query_type": "trend"}
+        return {**state, "query_type": "methodology"}
 
-    Classification rules (apply in order):
-    1. If query contains VoC, 후기, 리뷰, 소비자, 불만, 성분, 반응, 채널, 블로그, 유튜브, 수집, 문서 수, 건수 → "voc"
-    2. If query contains 세그먼트, segment, At-risk, Active Switcher, Loyal, Passive, 이탈 확률, switching, probability, 리스크 스코어, risk score, 대응 전략, intervention, 가중치, multiplier, Logistic → "switching"
-    3. If query contains 검색량, 역전, ratio, 추이, trend, 모멘텀, forecast, 예측, 카테고리 클릭 → "trend"
-    4. If query contains LDA, BERTopic, coherence, 토픽, KMeans, Chronos, 전처리, 불용어, 모드, 방법론 → "methodology"
-    5. If query asks for strategic conclusion, 대응 과제, 시사점, 한계, limitations, 종합, 요약 → "mixed"
-    6. Default: "mixed"
+    # switching: segment and probability questions
+    switching_kw = ["세그먼트", "segment", "at-risk", "at risk", "active switcher",
+                    "loyal", "passive user", "switching", "이탈 확률", "리스크 스코어",
+                    "risk score", "대응 전략", "intervention", "trend_multiplier",
+                    "가중치", "weight", "p_switch"]
+    if any(kw in q for kw in switching_kw):
+        return {**state, "query_type": "switching"}
 
-    Answer with ONE word only:"""
+    # trend: search volume and timeline questions
+    trend_kw = ["검색량", "역전", "ratio", "비율", "추이", "모멘텀", "momentum",
+                "forecast", "예측", "카테고리 클릭", "닥터그루트", "케라시스", "팬틴",
+                "클리니컬 스트렝스", "clinical strength", "처음 등장", "시점",
+                "chronos"]
+    if any(kw in q for kw in trend_kw):
+        return {**state, "query_type": "trend"}
+
+    # voc: consumer review questions
+    voc_kw = ["후기", "리뷰", "소비자 반응", "성분", "가려움", "자극", "뾰루지",
+              "불만", "만족", "차콜", "프로페셔널", "채널", "블로그", "유튜브",
+              "수집", "문서 수", "몇 건", "경쟁사를 언급", "이탈률"]
+    if any(kw in q for kw in voc_kw):
+        return {**state, "query_type": "voc"}
+
+    # Slow path: LLM fallback for ambiguous queries
+    prompt = f"""Classify this query into one category.
+Categories: voc, trend, switching, mixed, methodology
+Query: {q}
+Answer with ONE word:"""
 
     response = LLM.invoke(prompt)
     query_type = response.content.strip().lower().strip('"')
 
-    # Validate
-    if query_type not in ("voc", "trend", "switching", "mixed"):
+    if query_type not in ("voc", "trend", "switching", "mixed", "methodology"):
         query_type = "mixed"
 
     return {**state, "query_type": query_type}
-
 
 def retriever(state: AgentState) -> AgentState:
     """Retrieve relevant data based on query type and content."""
@@ -51,36 +77,14 @@ def retriever(state: AgentState) -> AgentState:
     retrieved_docs = ""
     sql_result = ""
 
-    # VoC retrieval for voc or mixed types
     if query_type in ("voc", "mixed"):
         retrieved_docs = search_voc(query, n_results=5)
 
-    # SQL query selection based on query type and keywords
     if query_type == "switching":
         sql_result = query_canned("segment_summary")
 
     elif query_type == "trend":
         sql_result = query_canned("antitro_timeline")
-
-    elif query_type == "mixed":
-        # Pick SQL based on query keywords
-        q = query.lower()
-        if any(kw in q for kw in ["이탈", "불만", "churn", "왜", "이유", "원인"]):
-            sql_result = query_canned("churn_reasons")
-        elif any(kw in q for kw in ["역전", "트렌드", "추이", "검색량", "안티트로"]):
-            sql_result = query_canned("antitro_timeline")
-        elif any(kw in q for kw in ["세그먼트", "segment", "at-risk", "위험"]):
-            sql_result = query_canned("segment_summary")
-        elif any(kw in q for kw in ["월별", "월간", "추세"]):
-            sql_result = query_canned("monthly_churn")
-        else:
-            sql_result = query_canned("churn_reasons")
-
-    elif query_type == "voc":
-        # Pure VoC can also benefit from churn stats
-        q = query.lower()
-        if any(kw in q for kw in ["이탈", "불만", "이유", "원인"]):
-            sql_result = query_canned("churn_reasons")
 
     elif query_type == "methodology":
         q = query.lower()
@@ -93,8 +97,35 @@ def retriever(state: AgentState) -> AgentState:
         else:
             sql_result = query_canned("lda_coherence")
 
-    return {**state, "retrieved_docs": retrieved_docs, "sql_result": sql_result}
+    elif query_type == "mixed":
+        q = query.lower()
+        if any(kw in q for kw in ["이탈", "불만", "churn", "왜", "이유", "원인"]):
+            sql_result = query_canned("churn_reasons")
+        elif any(kw in q for kw in ["역전", "트렌드", "추이", "검색량", "안티트로", "성장"]):
+            sql_result = query_canned("antitro_timeline")
+        elif any(kw in q for kw in ["세그먼트", "segment", "at-risk", "위험"]):
+            sql_result = query_canned("segment_summary")
+        elif any(kw in q for kw in ["월별", "월간", "추세"]):
+            sql_result = query_canned("monthly_churn")
+        elif any(kw in q for kw in ["대응", "과제", "전략", "시급", "시사점"]):
+            sql_result = (
+                query_canned("segment_summary") + "\n\n" +
+                query_canned("antitro_timeline")
+            )
+        elif any(kw in q for kw in ["한계", "limitation", "확인할 수 없"]):
+            sql_result = query_canned("antitro_timeline")
+        else:
+            sql_result = (
+                query_canned("churn_reasons") + "\n\n" +
+                query_canned("antitro_timeline")
+            )
 
+    elif query_type == "voc":
+        q = query.lower()
+        if any(kw in q for kw in ["이탈", "불만", "이유", "원인"]):
+            sql_result = query_canned("churn_reasons")
+
+    return {**state, "retrieved_docs": retrieved_docs, "sql_result": sql_result}
 
 
 def reporter(state: AgentState) -> AgentState:

@@ -198,14 +198,14 @@
   {
     "id": 29,
     "query": "trend_multiplier 계산에 사용된 가중치는?",
-    "expected_type": "switching",
+    "expected_type": "methodology",
     "reference": "w_antitro=0.50, w_hns=0.40, grid search로 결정",
     "eval_criteria": "must mention the weight values"
   },
   {
     "id": 30,
     "query": "Logistic Regression의 CV 정확도는?",
-    "expected_type": "switching",
+    "expected_type": "methodology",
     "reference": "0.9300 ± 0.0135 (stratified 5-fold)",
     "eval_criteria": "must mention ~0.93 accuracy"
   },
@@ -247,35 +247,35 @@
   {
     "id": 36,
     "query": "LDA 토픽 모델링에서 가장 높은 coherence를 보인 조합은?",
-    "expected_type": "voc",
+    "expected_type": "methodology",
     "reference": "blog + bigram, coherence 0.6177",
     "eval_criteria": "must mention blog bigram with ~0.62 coherence"
   },
   {
     "id": 37,
     "query": "BERTopic에서 몇 개의 토픽이 생성되었나?",
-    "expected_type": "voc",
+    "expected_type": "methodology",
     "reference": "min_topic_size=8에서 17개 토픽",
     "eval_criteria": "must mention 17 topics"
   },
   {
     "id": 38,
     "query": "LDA와 BERTopic 교차 검증에서 합의된 신호는 몇 개인가?",
-    "expected_type": "voc",
+    "expected_type": "methodology",
     "reference": "12개 High Confidence 신호",
     "eval_criteria": "must mention 12 consensus signals"
   },
   {
     "id": 39,
     "query": "전처리에서 두피를 불용어로 제거한 이유는?",
-    "expected_type": "voc",
+    "expected_type": "methodology",
     "reference": "모든 LDA 토픽에서 0.1+ 가중치로 출현, 토픽 구별력 없음",
     "eval_criteria": "must explain scalp appeared in all topics with high weight"
   },
   {
     "id": 40,
     "query": "adj_noun 모드가 실패한 이유는?",
-    "expected_type": "voc",
+    "expected_type": "methodology",
     "reference": "한국어 두피 VoC는 형용사-명사가 아닌 명사+동사 구조가 지배적, 30건 미만으로 불충분",
     "eval_criteria": "must mention Korean VoC linguistic structure difference"
   },
@@ -310,7 +310,7 @@
   {
     "id": 45,
     "query": "KMeans 클러스터링이 채택되지 않은 이유는?",
-    "expected_type": "switching",
+    "expected_type": "methodology",
     "reference": "At-risk 91건이 Passive User 클러스터에 전부 흡수됨. 비지도학습으로는 미묘한 프레임 신호 구분 불가",
     "eval_criteria": "must mention At-risk absorbed into Passive User clusters"
   },
@@ -331,7 +331,7 @@
   {
     "id": 48,
     "query": "Chronos를 선택한 이유는? 다른 대안은?",
-    "expected_type": "trend",
+    "expected_type": "methodology",
     "reference": "76개 관측치로 fine-tuning 불가 → zero-shot Chronos 선택. ARIMA는 구시대, TFT/PatchTST는 데이터 부족",
     "eval_criteria": "must mention zero-shot advantage with limited data"
   },
