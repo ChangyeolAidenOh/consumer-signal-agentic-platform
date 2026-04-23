@@ -1,352 +1,803 @@
 [
   {
     "id": 1,
-    "query": "안티트로가 헤드앤숄더 검색량을 역전한 시점은?",
+    "query": "안티트로가 헤드앤숄더 검색량을 역전한 시점은 언제야?",
     "expected_type": "trend",
     "reference": "2025년 6월 (ratio 1.027)",
-    "eval_criteria": "must mention June 2025 as reversal point"
+    "eval_criteria": "must mention June 2025 as reversal point",
+    "eval_category": "fact_checking",
+    "eval_strategy": "data_retrieval"
   },
   {
     "id": 2,
     "query": "2026년 4월 기준 안티트로 대 헤드앤숄더 비율은?",
     "expected_type": "trend",
     "reference": "1.327",
-    "eval_criteria": "must mention ratio 1.327"
+    "eval_criteria": "must mention ratio 1.327",
+    "eval_category": "fact_checking",
+    "eval_strategy": "data_retrieval"
   },
   {
     "id": 3,
     "query": "안티트로가 네이버 쇼핑 검색에 처음 등장한 시점은?",
     "expected_type": "trend",
     "reference": "2024년 12월",
-    "eval_criteria": "must mention December 2024"
+    "eval_criteria": "must mention December 2024",
+    "eval_category": "fact_checking",
+    "eval_strategy": "data_retrieval"
   },
   {
     "id": 4,
     "query": "헤드앤숄더 클리니컬 스트렝스의 검색량 추이는?",
     "expected_type": "trend",
     "reference": "2021년 평균 35.9에서 2026년 0.0으로 사실상 소멸",
-    "eval_criteria": "must indicate Clinical Strength collapsed or disappeared"
+    "eval_criteria": "must indicate Clinical Strength collapsed or disappeared",
+    "eval_category": "fact_checking",
+    "eval_strategy": "data_retrieval"
   },
   {
     "id": 5,
-    "query": "2026년 샴푸 카테고리 전체 검색량은 증가했나 감소했나?",
+    "query": "Chronos 모델의 헤드앤숄더 12개월 예측 결과는?",
     "expected_type": "trend",
-    "reference": "2026년 +14.6% 증가, 그러나 안티트로가 주도한 성장이며 HNS는 수혜 없음",
-    "eval_criteria": "must mention category growth but clarify HNS is not benefiting"
+    "reference": "median 47-54, flat trajectory, no organic recovery",
+    "eval_criteria": "must mention flat forecast with no organic recovery",
+    "eval_category": "fact_checking",
+    "eval_strategy": "data_retrieval"
   },
   {
     "id": 6,
-    "query": "Chronos 모델의 헤드앤숄더 12개월 예측 결과는?",
+    "query": "안티트로 검색량이 가장 급격히 증가한 단일 월은?",
     "expected_type": "trend",
-    "reference": "median 47-54, 80% CI 하한 약 49, 상한 약 59. 평탄한 궤적, 자연 회복 없음",
-    "eval_criteria": "must mention flat forecast with no organic recovery"
+    "reference": "2026년 1월, +40.2",
+    "eval_criteria": "must mention January 2026 and +40.2",
+    "eval_category": "fact_checking",
+    "eval_strategy": "data_retrieval"
   },
   {
     "id": 7,
-    "query": "안티트로 검색량이 가장 급격히 증가한 단일 월은?",
-    "expected_type": "trend",
-    "reference": "2026년 1월, +40.2 단일월 증가 (76개월 전체 최대)",
-    "eval_criteria": "must mention January 2026 and +40.2"
+    "query": "경쟁사를 언급한 소비자의 이탈률은 얼마야?",
+    "expected_type": "voc",
+    "reference": "82.2% vs 비언급 20.4%",
+    "eval_criteria": "must mention ~82% vs ~20% contrast",
+    "eval_category": "fact_checking",
+    "eval_strategy": "data_retrieval"
   },
   {
     "id": 8,
-    "query": "닥터그루트의 검색량은 2020년 대비 얼마나 감소했나?",
-    "expected_type": "trend",
-    "reference": "-87.8%",
-    "eval_criteria": "must mention approximately 87-88% decline"
+    "query": "전체 VoC에서 이탈위험 신호 비율은 얼마야?",
+    "expected_type": "voc",
+    "reference": "약 24%",
+    "eval_criteria": "must mention approximately 24%",
+    "eval_category": "fact_checking",
+    "eval_strategy": "data_retrieval"
   },
   {
     "id": 9,
-    "query": "비듬샴푸 키워드 검색량은 어떻게 변했나?",
-    "expected_type": "trend",
-    "reference": "2020년 평균 41.2에서 2026년 32.5로 -21.3% 감소",
-    "eval_criteria": "must indicate decline in dandruff shampoo searches"
+    "query": "안티트로를 언급한 VoC는 몇 건이야?",
+    "expected_type": "voc",
+    "reference": "101건",
+    "eval_criteria": "must mention approximately 101 documents",
+    "eval_category": "fact_checking",
+    "eval_strategy": "data_retrieval"
   },
   {
     "id": 10,
-    "query": "지루성두피샴푸 키워드의 변화 추이는?",
-    "expected_type": "trend",
-    "reference": "2020년 13.7에서 2026년 5.8로 -57.6% 감소",
-    "eval_criteria": "must indicate significant decline"
+    "query": "At-risk 세그먼트의 크기와 특징은?",
+    "expected_type": "switching",
+    "reference": "91건(5.2%), churn_rate 1.0, competitor_rate 0.0",
+    "eval_criteria": "must mention 91 docs, 100% churn, 0% competitor",
+    "eval_category": "fact_checking",
+    "eval_strategy": "data_retrieval"
   },
   {
     "id": 11,
-    "query": "소비자들이 헤드앤숄더에서 이탈하는 주된 이유는?",
-    "expected_type": "mixed",
-    "reference": "가려움 291건, 자극 90건, 뾰루지 63건이 주요 이탈 원인",
-    "eval_criteria": "must mention itchiness/irritation/breakouts with approximate counts"
+    "query": "Active Switcher 세그먼트의 특징은?",
+    "expected_type": "switching",
+    "reference": "83건(4.8%), churn_rate 1.0, competitor_rate 1.0, p_switch 0.405",
+    "eval_criteria": "must mention 83 docs, both churn and competitor at 1.0",
+    "eval_category": "fact_checking",
+    "eval_strategy": "data_retrieval"
   },
   {
     "id": 12,
-    "query": "경쟁사를 언급한 소비자의 이탈률은?",
-    "expected_type": "voc",
-    "reference": "경쟁사 언급 문서 이탈률 82.2% vs 비언급 20.4%",
-    "eval_criteria": "must mention ~82% vs ~20% contrast"
+    "query": "Loyal 세그먼트의 규모와 특징은?",
+    "expected_type": "switching",
+    "reference": "346건(19.8%), churn_rate 0.0, p_switch 0.0",
+    "eval_criteria": "must mention 346 docs, zero churn",
+    "eval_category": "fact_checking",
+    "eval_strategy": "data_retrieval"
   },
   {
     "id": 13,
-    "query": "전체 VoC에서 이탈위험 신호 비율은?",
-    "expected_type": "voc",
-    "reference": "약 24% (418/1744)",
-    "eval_criteria": "must mention approximately 24%"
+    "query": "Passive User는 전체의 몇 퍼센트야?",
+    "expected_type": "switching",
+    "reference": "1224건, 70.2%",
+    "eval_criteria": "must mention ~70% or 1224 docs",
+    "eval_category": "fact_checking",
+    "eval_strategy": "data_retrieval"
   },
   {
     "id": 14,
-    "query": "안티트로를 언급한 VoC는 몇 건이나 되나?",
-    "expected_type": "voc",
-    "reference": "competitor_mentioned=True가 101건",
-    "eval_criteria": "must mention approximately 101 documents"
+    "query": "switching probability가 가장 높은 세그먼트는 뭐야?",
+    "expected_type": "switching",
+    "reference": "Active Switcher (0.405)",
+    "eval_criteria": "must identify Active Switcher with ~0.40 probability",
+    "eval_category": "fact_checking",
+    "eval_strategy": "data_retrieval"
   },
   {
     "id": 15,
-    "query": "유튜브에서 수집된 VoC는 몇 건인가?",
-    "expected_type": "voc",
-    "reference": "1,386건 (raw), 필터 후 수는 소스별 분포에서 확인",
-    "eval_criteria": "must provide YouTube document count"
+    "query": "현재 헤드앤숄더 모멘텀은 어때?",
+    "expected_type": "trend",
+    "reference": "current_hns_momentum = -0.237",
+    "eval_criteria": "must mention negative momentum",
+    "eval_category": "fact_checking",
+    "eval_strategy": "data_retrieval"
   },
   {
     "id": 16,
-    "query": "블로그에서의 이탈 신호가 다른 채널 대비 특이한 점은?",
+    "query": "블로그에서의 이탈 신호가 다른 채널 대비 특이한 점이 있어?",
     "expected_type": "voc",
-    "reference": "블로그는 긴 사용 후기 기반으로 성분 분석, 효능 비교가 많음. Active Switcher의 주 채널",
-    "eval_criteria": "must mention blog as primary channel for detailed reviews or switching"
+    "reference": "블로그는 성분 분석, 효능 비교 중심. Active Switcher의 주 채널",
+    "eval_criteria": "must mention blog as primary channel for detailed reviews or switching",
+    "eval_category": "nuance_sentiment",
+    "eval_strategy": "channel_analysis"
   },
   {
     "id": 17,
-    "query": "헤드앤숄더에 만족하는 소비자들은 어떤 점을 좋아하나?",
+    "query": "헤드앤숄더에 만족하는 소비자들은 어떤 점을 좋아해?",
     "expected_type": "voc",
-    "reference": "비듬 제거 효과, 가성비, 쿨링감 등 긍정 신호",
-    "eval_criteria": "must mention positive aspects from VoC data"
+    "reference": "비듬 제거 효과, 가성비, 쿨링감",
+    "eval_criteria": "must mention positive aspects from VoC data",
+    "eval_category": "nuance_sentiment",
+    "eval_strategy": "sentiment_analysis"
   },
   {
     "id": 18,
-    "query": "헤드앤숄더 차콜 라인에 대한 소비자 반응은?",
+    "query": "소비자들이 성분에 대해 우려하는 구체적 키워드는 뭐야?",
     "expected_type": "voc",
-    "reference": "VoC에서 차콜 관련 언급 존재, 트렌드에서 차콜 검색량 확인 가능",
-    "eval_criteria": "must reference charcoal line consumer opinions"
+    "reference": "설페이트, 계면활성제, 약산성",
+    "eval_criteria": "must mention sulfate or surfactant related concerns",
+    "eval_category": "nuance_sentiment",
+    "eval_strategy": "keyword_detection"
   },
   {
     "id": 19,
-    "query": "소비자들이 성분에 대해 우려하는 구체적 키워드는?",
+    "query": "안티트로와 헤드앤숄더를 직접 비교한 후기의 주요 내용은 뭐야?",
     "expected_type": "voc",
-    "reference": "설페이트, 계면활성제, 약산성 등",
-    "eval_criteria": "must mention sulfate or surfactant related concerns"
+    "reference": "안티트로의 피부과/약국 채널 신뢰, 성분 차이, 효능 비교",
+    "eval_criteria": "must mention direct comparison content from VoC",
+    "eval_category": "nuance_sentiment",
+    "eval_strategy": "comparison_analysis"
   },
   {
     "id": 20,
-    "query": "안티트로와 헤드앤숄더를 직접 비교한 후기의 주요 내용은?",
-    "expected_type": "voc",
-    "reference": "안티트로의 피부과/약국 채널 신뢰, 성분 차이, 효능 비교 등",
-    "eval_criteria": "must mention direct comparison content from VoC"
+    "query": "효과가 있는지 없는지 확신이 안 선다는 류의 VoC가 있어? 이런 소비자들은 어떤 세그먼트에 해당해?",
+    "expected_type": "switching",
+    "reference": "불확실성 표현 소비자는 At-risk에 가까움",
+    "eval_criteria": "must connect uncertainty expressions to segment classification",
+    "eval_category": "nuance_sentiment",
+    "eval_strategy": "uncertainty_detection"
   },
   {
     "id": 21,
-    "query": "At-risk 세그먼트의 크기와 특징은?",
-    "expected_type": "switching",
-    "reference": "91건(5.2%), churn_rate 1.0, competitor_rate 0.0, ingredient/medical frame 채택",
-    "eval_criteria": "must mention 91 docs, 100% churn, 0% competitor, frame adoption"
+    "query": "조건부로 만족하는 소비자, 즉 효과는 인정하지만 부작용을 언급하는 VoC 패턴은 어때?",
+    "expected_type": "voc",
+    "reference": "positive_score > 0 AND churn_score > 0 동시 존재",
+    "eval_criteria": "must identify mixed signal documents, not classify as pure positive or negative",
+    "eval_category": "nuance_sentiment",
+    "eval_strategy": "sentiment_intent_separation"
   },
   {
     "id": 22,
-    "query": "Active Switcher 세그먼트의 특징은?",
-    "expected_type": "switching",
-    "reference": "83건(4.8%), churn_rate 1.0, competitor_rate 1.0, switching_probability 0.405",
-    "eval_criteria": "must mention 83 docs, both churn and competitor at 1.0"
+    "query": "다른 제품으로 바꿀지 고민 중이라는 표현이 담긴 VoC는 어떤 채널에서 주로 나와?",
+    "expected_type": "voc",
+    "reference": "전환 망설임 표현의 채널별 분포",
+    "eval_criteria": "must identify switching hesitation and channel distribution",
+    "eval_category": "nuance_sentiment",
+    "eval_strategy": "uncertainty_detection"
   },
   {
     "id": 23,
-    "query": "Loyal 세그먼트의 규모와 특징은?",
-    "expected_type": "switching",
-    "reference": "346건(19.8%), churn_rate 0.0, switching_probability 0.0",
-    "eval_criteria": "must mention 346 docs, zero churn"
+    "query": "후기에서 모르겠다, 글쎄, 애매하다 같은 불확실 표현이 나타나는 VoC의 신호 분포는 어때?",
+    "expected_type": "voc",
+    "reference": "불확실 표현과 signal_type 간 관계",
+    "eval_criteria": "must analyze relationship between uncertainty language and signal classification",
+    "eval_category": "nuance_sentiment",
+    "eval_strategy": "uncertainty_detection"
   },
   {
     "id": 24,
-    "query": "Passive User는 전체의 몇 퍼센트인가?",
-    "expected_type": "switching",
-    "reference": "1,224건, 70.2%",
-    "eval_criteria": "must mention ~70% or 1224 docs"
+    "query": "두피 가려움은 확실히 잡혔는데 머릿결이 뻣뻣하다는 류의 조건부 긍정 VoC가 있어? 이런 소비자는 이탈 위험이야 유지 가능이야?",
+    "expected_type": "voc",
+    "reference": "기능적 만족과 감각적 불만 공존. Intent는 Feature Request에 가까움",
+    "eval_criteria": "must distinguish functional satisfaction from sensory complaint, should not classify as pure positive or negative",
+    "eval_category": "nuance_sentiment",
+    "eval_strategy": "sentiment_intent_separation"
   },
   {
     "id": 25,
-    "query": "전체 브랜드 리스크 스코어는?",
+    "query": "헤숄 계속 쓸지 안티트로로 갈아탈지 고민 중이라는 VoC가 있어? 이 소비자의 이탈 확률은 어떻게 봐야 해?",
     "expected_type": "switching",
-    "reference": "0.068 (세그먼트 크기 가중 평균)",
-    "eval_criteria": "must mention 0.068 or approximately 7%"
+    "reference": "구매 결정 단계 소비자. Sentiment 부정 아닐 수 있으나 Intent는 Churn Risk",
+    "eval_criteria": "must identify as churn risk even if sentiment is not strongly negative",
+    "eval_category": "nuance_sentiment",
+    "eval_strategy": "sentiment_intent_separation"
   },
   {
     "id": 26,
-    "query": "At-risk 세그먼트에 대한 권장 대응 전략은?",
-    "expected_type": "switching",
-    "reference": "ingredient transparency content, medical frame alignment",
-    "eval_criteria": "must mention ingredient transparency or medical frame strategy"
+    "query": "배송 지연이나 CS 불만 같은 서비스 결함 관련 VoC와, 제품 효능 실망 VoC가 섞여 있을 때 어떻게 구분해야 해?",
+    "expected_type": "voc",
+    "reference": "분노(서비스결함)는 즉각 보상, 실망(기대치괴리)은 상세페이지 개선",
+    "eval_criteria": "must distinguish anger from disappointment, should suggest different business actions",
+    "eval_category": "nuance_sentiment",
+    "eval_strategy": "business_action_differentiation"
   },
   {
     "id": 27,
-    "query": "Active Switcher에 대한 권장 대응 전략은?",
-    "expected_type": "switching",
-    "reference": "direct competitive messaging, 즉각 대응 필요",
-    "eval_criteria": "must mention immediate intervention or competitive messaging"
+    "query": "이거 원래 거품이 안 나는 건지 불량인 건지 모르겠다는 VoC가 있다면 이걸 어떻게 분류해야 해?",
+    "expected_type": "voc",
+    "reference": "정보 부족으로 판단 유보. 억지 긍정/부정 분류 금지",
+    "eval_criteria": "must NOT force classification, should acknowledge insufficient information",
+    "eval_category": "nuance_sentiment",
+    "eval_strategy": "hallucination_test"
   },
   {
     "id": 28,
-    "query": "switching probability가 가장 높은 세그먼트는?",
-    "expected_type": "switching",
-    "reference": "Active Switcher (0.405)",
-    "eval_criteria": "must identify Active Switcher with ~0.40 probability"
+    "query": "딱히 좋은지 나쁜지 모르겠다는 중립 VoC의 분석 가치는 뭐야?",
+    "expected_type": "voc",
+    "reference": "정보성 부족 상태, 분석 가치 낮음 인식",
+    "eval_criteria": "must recognize low analytical value without forcing interpretation",
+    "eval_category": "nuance_sentiment",
+    "eval_strategy": "hallucination_test"
   },
   {
     "id": 29,
-    "query": "trend_multiplier 계산에 사용된 가중치는?",
-    "expected_type": "methodology",
-    "reference": "w_antitro=0.50, w_hns=0.40, grid search로 결정",
-    "eval_criteria": "must mention the weight values"
+    "query": "안티트로가 좋다는 말은 많은데 진짜 효과 있는 건지 반신반의한다는 VoC의 의미는 뭐야?",
+    "expected_type": "voc",
+    "reference": "사회적 증거와 개인적 불확실 사이의 인지적 부조화",
+    "eval_criteria": "must identify cognitive dissonance between social proof and personal uncertainty",
+    "eval_category": "nuance_sentiment",
+    "eval_strategy": "uncertainty_detection"
   },
   {
     "id": 30,
-    "query": "Logistic Regression의 CV 정확도는?",
-    "expected_type": "methodology",
-    "reference": "0.9300 ± 0.0135 (stratified 5-fold)",
-    "eval_criteria": "must mention ~0.93 accuracy"
+    "query": "샴푸 하나 때문에 스트레스받는다는 류의 감정 전이 VoC가 있어? 이건 단순 불만과 어떻게 달라?",
+    "expected_type": "voc",
+    "reference": "단순 불만이 아닌 일상 스트레스로 전이된 감정",
+    "eval_criteria": "must distinguish stress-transferred emotion from simple product complaint",
+    "eval_category": "nuance_sentiment",
+    "eval_strategy": "business_action_differentiation"
   },
   {
     "id": 31,
-    "query": "이탈 위험이 높은 소비자들의 검색 트렌드 변화는?",
-    "expected_type": "mixed",
-    "reference": "VoC 이탈 신호 증가와 안티트로 검색량 증가가 동기화됨",
-    "eval_criteria": "must connect VoC churn signals with Antitro search trend"
+    "query": "At-risk 세그먼트에 대한 권장 대응 전략은?",
+    "expected_type": "switching",
+    "reference": "ingredient transparency, medical frame alignment",
+    "eval_criteria": "must mention ingredient transparency or medical frame strategy",
+    "eval_category": "strategic_reasoning",
+    "eval_strategy": "action_recommendation"
   },
   {
     "id": 32,
-    "query": "안티트로 성장과 VoC 이탈 신호의 관계는?",
-    "expected_type": "mixed",
-    "reference": "안티트로 검색량 급증 시기와 VoC 이탈률 상승이 시간적으로 일치",
-    "eval_criteria": "must establish temporal correlation between Antitro growth and churn"
+    "query": "Active Switcher에 대한 권장 대응 전략은?",
+    "expected_type": "switching",
+    "reference": "direct competitive messaging, 즉각 대응",
+    "eval_criteria": "must mention immediate intervention or competitive messaging",
+    "eval_category": "strategic_reasoning",
+    "eval_strategy": "action_recommendation"
   },
   {
     "id": 33,
-    "query": "카테고리 성장에도 불구하고 헤드앤숄더가 위험한 이유는?",
+    "query": "헤드앤숄더의 가장 시급한 대응 과제는 뭐야?",
     "expected_type": "mixed",
-    "reference": "카테고리 성장은 안티트로가 주도, 비듬샴푸/지루성 키워드는 감소, HNS는 수혜 없음",
-    "eval_criteria": "must explain category growth is driven by Antitro, not HNS"
+    "reference": "유튜브 임상 신뢰성 콘텐츠 배포",
+    "eval_criteria": "must mention YouTube clinical credibility as immediate action",
+    "eval_category": "strategic_reasoning",
+    "eval_strategy": "action_recommendation"
   },
   {
     "id": 34,
-    "query": "소비자 프레임 전환이란 무엇이고 어떤 증거가 있나?",
+    "query": "중기(3-6개월) 대응 과제는?",
     "expected_type": "mixed",
-    "reference": "비듬샴푸 → 안티트로샴푸로 검색 키워드 자체가 바뀌는 현상. VoC에서 ingredient/medical frame 채택 증가",
-    "eval_criteria": "must explain frame shift concept with keyword migration evidence"
+    "reference": "효능 실패 신호 대응 — 가려움 291건, 자극 90건",
+    "eval_criteria": "must mention efficacy failure as medium-term priority",
+    "eval_category": "strategic_reasoning",
+    "eval_strategy": "action_recommendation"
   },
   {
     "id": 35,
-    "query": "유튜브 채널에서의 경쟁사 비교가 중요한 이유는?",
-    "expected_type": "mixed",
-    "reference": "유튜브에서 성분 비교/구매 결정이 이루어짐. BERTopic Topic 1에서 YouTube 237건 vs Blog 18건",
-    "eval_criteria": "must mention YouTube as key channel for competitive comparison"
+    "query": "장기(6-12개월) 구조적 과제는?",
+    "expected_type": "switching",
+    "reference": "채널 신뢰성 — 안티트로 병원/약국 채널 우위 대응",
+    "eval_criteria": "must mention channel credibility gap",
+    "eval_category": "strategic_reasoning",
+    "eval_strategy": "action_recommendation"
   },
   {
     "id": 36,
-    "query": "LDA 토픽 모델링에서 가장 높은 coherence를 보인 조합은?",
-    "expected_type": "methodology",
-    "reference": "blog + bigram, coherence 0.6177",
-    "eval_criteria": "must mention blog bigram with ~0.62 coherence"
+    "query": "이 분석의 전략적 결론을 한 마디로 요약하면 뭐야?",
+    "expected_type": "mixed",
+    "reference": "카테고리 재정의, 소비자 프레임이 더마/클리닉으로 전환 중",
+    "eval_criteria": "must mention category redefinition or frame shift",
+    "eval_category": "strategic_reasoning",
+    "eval_strategy": "synthesis"
   },
   {
     "id": 37,
-    "query": "BERTopic에서 몇 개의 토픽이 생성되었나?",
-    "expected_type": "methodology",
-    "reference": "min_topic_size=8에서 17개 토픽",
-    "eval_criteria": "must mention 17 topics"
+    "query": "안티트로의 검색량 급증과 HNS 이탈 신호의 관계가 단순 시간적 동시성인지 인과관계인지 분석해줘",
+    "expected_type": "mixed",
+    "reference": "시계열 동기화 확인 가능하나 마케팅 데이터 없어 인과 단정 불가",
+    "eval_criteria": "must acknowledge causal limitation, should NOT claim definitive causation",
+    "eval_category": "strategic_reasoning",
+    "eval_strategy": "causal_reasoning"
   },
   {
     "id": 38,
-    "query": "LDA와 BERTopic 교차 검증에서 합의된 신호는 몇 개인가?",
-    "expected_type": "methodology",
-    "reference": "12개 High Confidence 신호",
-    "eval_criteria": "must mention 12 consensus signals"
+    "query": "At-risk와 Active Switcher 중 재구매 방어 ROI가 더 높은 집단은 어디야? CS팀과 마케팅팀이 각각 준비해야 할 메시지는 뭐야?",
+    "expected_type": "switching",
+    "reference": "At-risk ROI 높음. CS: 효능 대응, 마케팅: 성분 투명성",
+    "eval_criteria": "must prioritize At-risk with reasoning, must differentiate CS vs marketing actions",
+    "eval_category": "strategic_reasoning",
+    "eval_strategy": "resource_allocation"
   },
   {
     "id": 39,
-    "query": "전처리에서 두피를 불용어로 제거한 이유는?",
-    "expected_type": "methodology",
-    "reference": "모든 LDA 토픽에서 0.1+ 가중치로 출현, 토픽 구별력 없음",
-    "eval_criteria": "must explain scalp appeared in all topics with high weight"
+    "query": "카테고리 14.6% 성장에도 HNS가 수혜를 못 받는 이유는 뭐야? 향후 6개월 최우선 조정 포인트는?",
+    "expected_type": "mixed",
+    "reference": "HNS 포지셔닝 실패. 더마/클리닉 키워드 전환 필요",
+    "eval_criteria": "must distinguish market growth from positioning failure, must propose actionable change",
+    "eval_category": "strategic_reasoning",
+    "eval_strategy": "counter_intuitive_insight"
   },
   {
     "id": 40,
-    "query": "adj_noun 모드가 실패한 이유는?",
-    "expected_type": "methodology",
-    "reference": "한국어 두피 VoC는 형용사-명사가 아닌 명사+동사 구조가 지배적, 30건 미만으로 불충분",
-    "eval_criteria": "must mention Korean VoC linguistic structure difference"
+    "query": "성분 투명성으로 Loyal 방어 vs 임상 브랜딩 교체 중 리스크 0.068 수준에서 더 시급한 건 뭐야?",
+    "expected_type": "switching",
+    "reference": "At-risk 전환 방지 시급. ingredient_frame 60.4%가 근거",
+    "eval_criteria": "must not take 0.068 at face value, must justify with segment data",
+    "eval_category": "strategic_reasoning",
+    "eval_strategy": "strategic_tradeoff"
   },
   {
     "id": 41,
-    "query": "헤드앤숄더의 가장 시급한 대응 과제는?",
+    "query": "데이터에서 확인할 수 없는 한계는 뭐야?",
     "expected_type": "mixed",
-    "reference": "유튜브에 임상 신뢰성 콘텐츠 배포 — 성분 비교 질문에 선제 대응",
-    "eval_criteria": "must mention YouTube clinical credibility content as immediate action"
+    "reference": "1) 검색량 ≠ 구매 2) At-risk 이탈 소요시간 측정 불가",
+    "eval_criteria": "must mention at least one limitation",
+    "eval_category": "conflict_ambiguity",
+    "eval_strategy": "limitation_awareness"
   },
   {
     "id": 42,
-    "query": "중기(3-6개월) 대응 과제는?",
-    "expected_type": "mixed",
-    "reference": "효능 실패 신호 대응 — 가려움 291건, 자극 90건의 근본 원인 해결",
-    "eval_criteria": "must mention efficacy failure as medium-term priority"
+    "query": "Loyal이 19.8%인데 리스크 0.068이면 안전한 거야?",
+    "expected_type": "switching",
+    "reference": "At-risk+Active Switcher 10%에 리스크 집중",
+    "eval_criteria": "must mention risk concentration, should NOT simply say safe",
+    "eval_category": "conflict_ambiguity",
+    "eval_strategy": "fallacy_of_average"
   },
   {
     "id": 43,
-    "query": "장기(6-12개월) 구조적 과제는?",
+    "query": "VoC는 긍정인데 검색량은 하락세야. 어느 쪽을 우선순위로 봐야 해?",
     "expected_type": "mixed",
-    "reference": "채널 신뢰성 전략 — 안티트로의 병원/약국 채널 우위에 대응",
-    "eval_criteria": "must mention channel credibility gap with hospital/pharmacy"
+    "reference": "검색량 = leading indicator, VoC = lagging. 검색량 감소가 유입 병목",
+    "eval_criteria": "must distinguish leading vs lagging indicators",
+    "eval_category": "conflict_ambiguity",
+    "eval_strategy": "data_hierarchy"
   },
   {
     "id": 44,
-    "query": "수집된 전체 VoC 문서 수는?",
-    "expected_type": "voc",
-    "reference": "raw 2,714건, HNS 관련성 필터 후 1,744건",
-    "eval_criteria": "must mention 2714 raw and 1744 filtered"
+    "query": "안티트로는 1월 급등 후 2월 하락했어. 일시적 유행 아니야?",
+    "expected_type": "trend",
+    "reference": "단기 등락 vs 구조적 전환 구분. 키워드 변화율이 근거",
+    "eval_criteria": "must distinguish fluctuation from structural shift",
+    "eval_category": "conflict_ambiguity",
+    "eval_strategy": "temporal_analysis"
   },
   {
     "id": 45,
-    "query": "KMeans 클러스터링이 채택되지 않은 이유는?",
-    "expected_type": "methodology",
-    "reference": "At-risk 91건이 Passive User 클러스터에 전부 흡수됨. 비지도학습으로는 미묘한 프레임 신호 구분 불가",
-    "eval_criteria": "must mention At-risk absorbed into Passive User clusters"
+    "query": "유튜브 데이터가 광고성 댓글 때문에 편향됐을 가능성은 없어?",
+    "expected_type": "voc",
+    "reference": "편향 인정하되 블로그/카페 교차검증으로 신뢰성 확보",
+    "eval_criteria": "must acknowledge bias and explain triangulation",
+    "eval_category": "conflict_ambiguity",
+    "eval_strategy": "data_quality"
   },
   {
     "id": 46,
-    "query": "Layer 2에서 ML 분류가 실패한 이유는?",
-    "expected_type": "trend",
-    "reference": "12개 risk 레이블이 시계열 마지막 12개월에 몰려있어 학습 데이터에 양성 샘플 0개",
-    "eval_criteria": "must mention zero positive samples in training set"
+    "query": "카테고리 전체 성장률과 HNS 실적 간 괴리는 왜 발생해?",
+    "expected_type": "mixed",
+    "reference": "안티트로가 시장 재정의. 비듬샴푸 하락, 안티트로샴푸 신규 성장",
+    "eval_criteria": "must explain market redefinition by competitor",
+    "eval_category": "conflict_ambiguity",
+    "eval_strategy": "counter_intuitive_insight"
   },
   {
     "id": 47,
-    "query": "데이터에서 확인할 수 없는 한계는?",
+    "query": "성분 이슈는 VoC에서 확인되는데 왜 검색량엔 바로 반영이 안 돼?",
     "expected_type": "mixed",
-    "reference": "1) 안티트로 검색량은 관심이지 구매가 아님 2) At-risk의 이탈까지 소요 시간 측정 불가",
-    "eval_criteria": "must mention at least one limitation from the analysis"
+    "reference": "인지와 확신 사이의 지연 효과",
+    "eval_criteria": "must explain lagging effect between awareness and conviction",
+    "eval_category": "conflict_ambiguity",
+    "eval_strategy": "temporal_analysis"
   },
   {
     "id": 48,
-    "query": "Chronos를 선택한 이유는? 다른 대안은?",
-    "expected_type": "methodology",
-    "reference": "76개 관측치로 fine-tuning 불가 → zero-shot Chronos 선택. ARIMA는 구시대, TFT/PatchTST는 데이터 부족",
-    "eval_criteria": "must mention zero-shot advantage with limited data"
+    "query": "재구매율이 낮다는 직접적 언급이 없는데 왜 이탈을 확신해?",
+    "expected_type": "mixed",
+    "reference": "프레임 전환(medical/ingredient frame adoption)이 근거",
+    "eval_criteria": "must cite frame shift as evidence instead of repeat purchase data",
+    "eval_category": "conflict_ambiguity",
+    "eval_strategy": "alternative_evidence"
   },
   {
     "id": 49,
-    "query": "현재 헤드앤숄더 모멘텀은?",
-    "expected_type": "trend",
-    "reference": "current_hns_momentum = -0.237 (하락세)",
-    "eval_criteria": "must mention negative momentum"
+    "query": "경쟁사 언급이 없는 VoC도 있는데 이것들은 어떻게 해석해야 해?",
+    "expected_type": "voc",
+    "reference": "제품 내부 문제. 경쟁사 VoC와 분리 대응 필요",
+    "eval_criteria": "must separate internal issues from competitive switching",
+    "eval_category": "conflict_ambiguity",
+    "eval_strategy": "segmented_interpretation"
   },
   {
     "id": 50,
-    "query": "이 분석의 전략적 결론을 한 마디로 요약하면?",
+    "query": "Chronos 예측(평탄)과 실제 시장 역동성 사이의 간극은 왜 생겨?",
+    "expected_type": "trend",
+    "reference": "AI 모델 한계(과거 기반) vs 신규 플레이어 등장 변수",
+    "eval_criteria": "must distinguish model limitation from market disruption",
+    "eval_category": "conflict_ambiguity",
+    "eval_strategy": "model_limitation"
+  },
+  {
+    "id": 51,
+    "query": "리스크 0.068이 0.1로 상승한다면 가장 먼저 어떤 조치를 취해야 해?",
+    "expected_type": "switching",
+    "reference": "Active Switcher 유출 속도 제어 위한 즉각 인터벤션",
+    "eval_criteria": "must prioritize Active Switcher outflow control",
+    "eval_category": "conflict_ambiguity",
+    "eval_strategy": "scenario_planning"
+  },
+  {
+    "id": 52,
+    "query": "헤숄 쓰다가 머리 다 빠질뻔 ㅋㅋ 다른거 추천좀",
+    "expected_type": "voc",
+    "reference": "헤숄=헤드앤숄더 인식, 이탈 VoC 검색, 분석적 중립 유지",
+    "eval_criteria": "must recognize slang, provide data-based response",
+    "eval_category": "edge_case",
+    "eval_strategy": "input_normalization"
+  },
+  {
+    "id": 53,
+    "query": "팬틴이랑 케라시스 비교해줘",
+    "expected_type": "trend",
+    "reference": "HNS와 안티트로에 국한된 분석 범위 명시",
+    "eval_criteria": "must state data boundary, should not fabricate comparison",
+    "eval_category": "edge_case",
+    "eval_strategy": "boundary_adherence"
+  },
+  {
+    "id": 54,
+    "query": "이 데이터 언제 수집한 거야? 신뢰할 수 있어?",
+    "expected_type": "voc",
+    "reference": "API 수집, 2714건 raw → 1744건 필터, 공식 API만 사용",
+    "eval_criteria": "must explain collection method and reliability",
+    "eval_category": "edge_case",
+    "eval_strategy": "meta_awareness"
+  },
+  {
+    "id": 55,
+    "query": "헤드앤숄더랑 안티트로 중에 뭐 사야돼?",
+    "expected_type": "voc",
+    "reference": "구매 추천 대신 의사결정 보조 정보 제공",
+    "eval_criteria": "must maintain analytical neutrality",
+    "eval_category": "edge_case",
+    "eval_strategy": "refusal_strategy"
+  },
+  {
+    "id": 56,
+    "query": "Review analysis 좀 해줘. Very bad smell on HNS.",
+    "expected_type": "voc",
+    "reference": "한영 혼용 처리, 냄새 관련 VoC 매칭",
+    "eval_criteria": "must handle mixed language, match scent-related VoC",
+    "eval_category": "edge_case",
+    "eval_strategy": "input_normalization"
+  },
+  {
+    "id": 57,
+    "query": "그거 있잖아, 지난번에 분석한 거 다시 알려줘",
     "expected_type": "mixed",
-    "reference": "카테고리 자체가 재정의되고 있으며, 소비자 프레임이 비듬샴푸에서 더마/클리닉 솔루션으로 전환 중",
-    "eval_criteria": "must mention category redefinition or frame shift"
+    "reference": "이전 대화 컨텍스트 없음 안내",
+    "eval_criteria": "must indicate no previous context, ask for clarification",
+    "eval_category": "edge_case",
+    "eval_strategy": "context_handling"
+  },
+  {
+    "id": 58,
+    "query": "헤드앤숄더 샴푸를 쓴 지 3년이 되었는데 처음에는 비듬이 확 줄어서 좋았는데 요즘은 다시 비듬이 생기기 시작했고 두피도 가렵고 냄새도 나는 것 같고 친구가 안티트로 써보라고 해서 찾아보니까 병원에서도 추천하는 제품이라고 하더라고요 근데 가격이 좀 비싸서 고민이고 헤드앤숄더 차콜이나 프로페셔널 라인으로 바꿔볼까 하는 생각도 있는데 어떻게 하면 좋을까요",
+    "expected_type": "voc",
+    "reference": "이탈 망설임 + 가격 민감 + 라인 전환 고려 3가지 분리",
+    "eval_criteria": "must extract multiple intents, address each separately",
+    "eval_category": "edge_case",
+    "eval_strategy": "multi_intent_extraction"
+  },
+  {
+    "id": 59,
+    "query": "헤드앤숄더는 비듬에 효과가 없다고 하던데 왜 Loyal이 19.8%나 돼?",
+    "expected_type": "switching",
+    "reference": "일부 VoC vs Loyal 세그먼트 구분",
+    "eval_criteria": "must resolve contradiction between partial VoC and segment data",
+    "eval_category": "edge_case",
+    "eval_strategy": "contradiction_resolution"
+  },
+  {
+    "id": 60,
+    "query": "설페이트 프리 트렌드가 헤드앤숄더에 어떤 영향을 주고 있어?",
+    "expected_type": "mixed",
+    "reference": "VoC 내 설페이트 부정 언급과 순한 성분 선호 연결",
+    "eval_criteria": "must connect sulfate complaints with gentle ingredient trend",
+    "eval_category": "domain_knowledge",
+    "eval_strategy": "ingredient_analysis"
+  },
+  {
+    "id": 61,
+    "query": "약국 채널 vs 온라인 채널에서의 소비자 인식 차이는 뭐야?",
+    "expected_type": "voc",
+    "reference": "안티트로 약국/병원 신뢰감 vs 온라인 가성비/편의성",
+    "eval_criteria": "must distinguish trust-based from convenience-based positioning",
+    "eval_category": "domain_knowledge",
+    "eval_strategy": "channel_analysis"
+  },
+  {
+    "id": 62,
+    "query": "비듬 샴푸 시장에서 더마 포지셔닝이 중요해진 이유는 뭐야?",
+    "expected_type": "trend",
+    "reference": "비듬 세정에서 두피 건강/관리로 프레임 이동",
+    "eval_criteria": "must explain frame shift from functional to derma care",
+    "eval_category": "domain_knowledge",
+    "eval_strategy": "market_evolution"
+  },
+  {
+    "id": 63,
+    "query": "가성비 관련 불만이 이탈에 영향을 주고 있어?",
+    "expected_type": "voc",
+    "reference": "성분/효능 이슈와 가성비 분리 판별",
+    "eval_criteria": "must separate price sensitivity from efficacy complaints",
+    "eval_category": "domain_knowledge",
+    "eval_strategy": "churn_driver_analysis"
+  },
+  {
+    "id": 64,
+    "query": "계절성(여름 vs 겨울)에 따른 두피 고민의 변화가 VoC에 나타나?",
+    "expected_type": "mixed",
+    "reference": "여름 지성/쿨링 vs 겨울 건조/각질 분포",
+    "eval_criteria": "must identify seasonal patterns or acknowledge data limitation",
+    "eval_category": "domain_knowledge",
+    "eval_strategy": "temporal_analysis"
+  },
+  {
+    "id": 65,
+    "query": "소비자들은 실리콘 성분을 어떻게 인식하고 있어?",
+    "expected_type": "voc",
+    "reference": "실리콘/파라벤 이슈와 브랜드 신뢰도 영향",
+    "eval_criteria": "must identify silicon concerns if present in VoC",
+    "eval_category": "domain_knowledge",
+    "eval_strategy": "ingredient_analysis"
+  },
+  {
+    "id": 66,
+    "query": "탈모 키워드와 비듬 키워드가 VoC에서 혼용되는 양상은 어때?",
+    "expected_type": "voc",
+    "reference": "교차 기대치 현상 — 비듬 사용자가 탈모 예방까지 기대",
+    "eval_criteria": "must identify cross-expectation if present",
+    "eval_category": "domain_knowledge",
+    "eval_strategy": "cross_category_analysis"
+  },
+  {
+    "id": 67,
+    "query": "패키지/용기(펌프 등) 사용 경험이 재구매에 미치는 영향은 있어?",
+    "expected_type": "voc",
+    "reference": "UX 데이터 현재 파이프라인에 없을 수 있음",
+    "eval_criteria": "must analyze if data exists, or state limitation",
+    "eval_category": "domain_knowledge",
+    "eval_strategy": "hallucination_test"
+  },
+  {
+    "id": 68,
+    "query": "유튜브의 인플루언서 추천이 검색량 상승에 기여하고 있어?",
+    "expected_type": "trend",
+    "reference": "인플루언서 데이터 직접 없음. 시점 상관관계 시도 또는 한계 인정",
+    "eval_criteria": "must attempt correlation or acknowledge missing data",
+    "eval_category": "domain_knowledge",
+    "eval_strategy": "causal_reasoning"
+  },
+  {
+    "id": 69,
+    "query": "클리니컬 라인 소멸은 시장 요구 변화 때문이야?",
+    "expected_type": "trend",
+    "reference": "성능 이슈인지 강한 성분 기피 인식 변화인지 진단",
+    "eval_criteria": "must distinguish performance issue from market perception shift",
+    "eval_category": "domain_knowledge",
+    "eval_strategy": "root_cause_analysis"
+  },
+  {
+    "id": 70,
+    "query": "안티트로 관련 VoC 중 이탈위험 신호가 아닌 문서가 있다면 어떤 내용이야?",
+    "expected_type": "voc",
+    "reference": "competitor_mentioned=True AND signal_type != 이탈위험 조건",
+    "eval_criteria": "must correctly apply compound filter",
+    "eval_category": "pipeline_diagnostic",
+    "eval_strategy": "compound_filter_test"
+  },
+  {
+    "id": 71,
+    "query": "2025년 하반기에 수집된 블로그 VoC만 분석하면 어떤 패턴이 보여?",
+    "expected_type": "voc",
+    "reference": "시간 + 소스 필터 조합",
+    "eval_criteria": "must apply time AND source filters",
+    "eval_category": "pipeline_diagnostic",
+    "eval_strategy": "compound_filter_test"
+  },
+  {
+    "id": 72,
+    "query": "이탈위험 VoC와 긍정 VoC의 평균 텍스트 길이에 차이가 있어?",
+    "expected_type": "voc",
+    "reference": "텍스트 길이 컬럼 없음. 산출 불가",
+    "eval_criteria": "must state cannot be calculated from current schema",
+    "eval_category": "pipeline_diagnostic",
+    "eval_strategy": "schema_awareness"
+  },
+  {
+    "id": 73,
+    "query": "가장 최근 수집된 VoC 5건의 신호 분포는 어때?",
+    "expected_type": "voc",
+    "reference": "date 정렬 + limit 5",
+    "eval_criteria": "must apply date sort and limit",
+    "eval_category": "pipeline_diagnostic",
+    "eval_strategy": "query_construction"
+  },
+  {
+    "id": 74,
+    "query": "Active Switcher 세그먼트에 속한 문서들을 전부 나열해줘",
+    "expected_type": "switching",
+    "reference": "대량 데이터 조회 리미트 처리",
+    "eval_criteria": "must handle bulk request appropriately",
+    "eval_category": "pipeline_diagnostic",
+    "eval_strategy": "capacity_test"
+  },
+  {
+    "id": 75,
+    "query": "긍정 신호를 가진 VoC 중에서 배송이 언급된 문서는 몇 개야?",
+    "expected_type": "voc",
+    "reference": "신호 + 키워드 복합 필터",
+    "eval_criteria": "must apply AND condition across signal and text",
+    "eval_category": "pipeline_diagnostic",
+    "eval_strategy": "compound_filter_test"
+  },
+  {
+    "id": 76,
+    "query": "현재 보유한 VoC 데이터의 시작 날짜와 종료 날짜는 언제야?",
+    "expected_type": "voc",
+    "reference": "데이터 범위 메타데이터 쿼리",
+    "eval_criteria": "must query data range",
+    "eval_category": "pipeline_diagnostic",
+    "eval_strategy": "meta_awareness"
+  },
+  {
+    "id": 77,
+    "query": "각 소스별로 이탈위험 신호가 몇 건씩 있는지 합계를 내줘",
+    "expected_type": "voc",
+    "reference": "GROUP BY source + COUNT",
+    "eval_criteria": "must produce correct aggregation",
+    "eval_category": "pipeline_diagnostic",
+    "eval_strategy": "aggregation_test"
+  },
+  {
+    "id": 78,
+    "query": "성분이라는 단어가 포함된 문서를 찾아서 요약하지 말고 원문 그대로 보여줘",
+    "expected_type": "voc",
+    "reference": "키워드 검색 + raw text 출력",
+    "eval_criteria": "must return raw text without summarization",
+    "eval_category": "pipeline_diagnostic",
+    "eval_strategy": "output_control"
+  },
+  {
+    "id": 79,
+    "query": "재구매 의사라는 컬럼이 있어? 있다면 데이터는 어떻게 구성되어 있어?",
+    "expected_type": "mixed",
+    "reference": "해당 컬럼 없음. 스키마 확인 후 부재 보고",
+    "eval_criteria": "must check schema and report column does not exist",
+    "eval_category": "pipeline_diagnostic",
+    "eval_strategy": "schema_awareness"
+  },
+  {
+    "id": 80,
+    "query": "trend_multiplier 계산에 사용된 가중치는?",
+    "expected_type": "switching",
+    "reference": "w_antitro=0.50, w_hns=0.40",
+    "eval_criteria": "must mention weight values",
+    "eval_category": "methodology",
+    "eval_strategy": "method_knowledge"
+  },
+  {
+    "id": 81,
+    "query": "Logistic Regression의 CV 정확도는?",
+    "expected_type": "methodology",
+    "reference": "0.9300 ± 0.0135",
+    "eval_criteria": "must mention ~0.93 accuracy",
+    "eval_category": "methodology",
+    "eval_strategy": "method_knowledge"
+  },
+  {
+    "id": 82,
+    "query": "LDA 토픽 모델링에서 가장 높은 coherence를 보인 조합은?",
+    "expected_type": "methodology",
+    "reference": "blog + bigram, 0.6177",
+    "eval_criteria": "must mention blog bigram ~0.62",
+    "eval_category": "methodology",
+    "eval_strategy": "method_knowledge"
+  },
+  {
+    "id": 83,
+    "query": "BERTopic에서 몇 개의 토픽이 생성되었나?",
+    "expected_type": "methodology",
+    "reference": "17개 (min_topic_size=8)",
+    "eval_criteria": "must mention 17 topics",
+    "eval_category": "methodology",
+    "eval_strategy": "method_knowledge"
+  },
+  {
+    "id": 84,
+    "query": "LDA와 BERTopic 교차 검증에서 합의된 신호는 몇 개인가?",
+    "expected_type": "methodology",
+    "reference": "12개 High Confidence",
+    "eval_criteria": "must mention 12 consensus signals",
+    "eval_category": "methodology",
+    "eval_strategy": "method_knowledge"
+  },
+  {
+    "id": 85,
+    "query": "전처리에서 두피를 불용어로 제거한 이유는 뭐야?",
+    "expected_type": "methodology",
+    "reference": "모든 토픽에서 0.1+ 가중치, 구별력 없음",
+    "eval_criteria": "must explain high weight across all topics",
+    "eval_category": "methodology",
+    "eval_strategy": "method_knowledge"
+  },
+  {
+    "id": 86,
+    "query": "adj_noun 모드가 실패한 이유는 뭐야?",
+    "expected_type": "methodology",
+    "reference": "한국어 VoC 명사+동사 구조 지배적, 30건 미만",
+    "eval_criteria": "must mention Korean linguistic structure",
+    "eval_category": "methodology",
+    "eval_strategy": "method_knowledge"
+  },
+  {
+    "id": 87,
+    "query": "KMeans 클러스터링이 채택되지 않은 이유는 뭐야?",
+    "expected_type": "methodology",
+    "reference": "At-risk가 Passive User에 흡수",
+    "eval_criteria": "must mention At-risk absorbed",
+    "eval_category": "methodology",
+    "eval_strategy": "method_knowledge"
+  },
+  {
+    "id": 88,
+    "query": "Layer 2에서 ML 분류가 실패한 이유는 뭐야?",
+    "expected_type": "methodology",
+    "reference": "학습 데이터에 양성 샘플 0개",
+    "eval_criteria": "must mention zero positive samples",
+    "eval_category": "methodology",
+    "eval_strategy": "method_knowledge"
+  },
+  {
+    "id": 89,
+    "query": "Chronos를 선택한 이유는 뭐야? 다른 대안은?",
+    "expected_type": "methodology",
+    "reference": "76개 관측치 fine-tuning 불가, zero-shot 선택",
+    "eval_criteria": "must mention zero-shot advantage",
+    "eval_category": "methodology",
+    "eval_strategy": "method_knowledge"
   }
 ]
