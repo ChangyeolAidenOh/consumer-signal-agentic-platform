@@ -17,5 +17,19 @@ services:
       timeout: 3s
       retries: 5
 
+  api:
+    build: .
+    container_name: hns_api
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://hns_user:hns_local_dev_only@postgres:5432/hns_platform
+      OLLAMA_HOST: http://host.docker.internal:11434
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./chroma_data:/app/chroma_data
+
 volumes:
   postgres_data:

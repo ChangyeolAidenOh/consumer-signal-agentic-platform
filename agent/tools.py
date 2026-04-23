@@ -1,11 +1,12 @@
 """Tools for the agent: VoC search (ChromaDB) and SQL query (PostgreSQL)."""
 
+import os
 import chromadb
 from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
 from sqlalchemy import create_engine, text
 
 
-DB_URL = "postgresql://hns_user:hns_local_dev_only@localhost:5433/hns_platform"
+DB_URL = os.getenv("DATABASE_URL", "postgresql://hns_user:hns_local_dev_only@localhost:5433/hns_platform")
 CHROMA_DIR = "./chroma_data"
 COLLECTION_NAME = "hns_voc"
 EMBEDDING_MODEL = "jhgan/ko-sroberta-multitask"

@@ -1,5 +1,6 @@
 """LangGraph agent with Router -> Retriever -> Reporter nodes."""
 
+import os
 from langgraph.graph import StateGraph, END
 from langchain_ollama import ChatOllama
 
@@ -7,8 +8,11 @@ from agent.state import AgentState
 from agent.tools import search_voc, query_canned, query_trend
 
 
-LLM = ChatOllama(model="llama3.1:8b", temperature=0)
-
+LLM = ChatOllama(
+    model="llama3.1:8b",
+    temperature=0,
+    base_url=os.getenv("OLLAMA_HOST", "http://localhost:11434"),
+)
 
 def router(state: AgentState) -> AgentState:
     """Hybrid router: keyword match first, LLM fallback for ambiguous queries."""
