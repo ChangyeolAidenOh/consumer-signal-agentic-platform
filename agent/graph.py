@@ -2,18 +2,28 @@
 
 import os
 
-from langchain_ollama import ChatOllama
-from langgraph.graph import END, StateGraph
+from langgraph.graph import StateGraph, END
 
 from agent.state import AgentState
 from agent.tools import query_canned, search_voc
 
-LLM = ChatOllama(
-    model="llama3.1:8b",
-    temperature=0,
-    base_url=os.getenv("OLLAMA_HOST", "http://localhost:11434"),
-)
 
+LLM_PROVIDER = os.getenv("LLM_PROVIDER", "ollama")
+
+if LLM_PROVIDER == "anthropic":
+    from langchain_anthropic import ChatAnthropic
+    LLM = ChatAnthropic(
+        model="claude-haiku-4-5-20251001",
+        temperature=0,
+        api_key=os.getenv("ANTHROPIC_API_KEY"),
+    )
+else:
+    from langchain_ollama import ChatOllama
+    LLM = ChatOllama(
+        model="llama3.1:8b",
+        temperature=0,
+        base_url=os.getenv("OLLAMA_HOST", "http://localhost:11434"),
+    )
 def router(state: AgentState) -> AgentState:
     """Hybrid router: keyword match first, LLM fallback for ambiguous queries."""
     q = state["query"].lower()

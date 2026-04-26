@@ -8,12 +8,13 @@ for filtered retrieval.
 Usage:
     python rag/index.py
 """
+import os
 
 import chromadb
 from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
 from sqlalchemy import create_engine, text
 
-DB_URL = "postgresql://hns_user:hns_local_dev_only@localhost:5433/hns_platform"
+DB_URL = os.getenv("DATABASE_URL", "postgresql://hns_user:hns_local_dev_only@localhost:5433/hns_platform")
 CHROMA_DIR = "./chroma_data"
 COLLECTION_NAME = "hns_voc"
 EMBEDDING_MODEL = "jhgan/ko-sroberta-multitask"
@@ -66,11 +67,9 @@ def build_collection(rows, collection):
 def main():
     engine = create_engine(DB_URL)
 
-    # Load from PostgreSQL
     rows = load_documents(engine)
     print(f"loaded {len(rows)} documents from PostgreSQL")
 
-    # Initialize ChromaDB with Korean embedding model
     print(f"loading embedding model: {EMBEDDING_MODEL}")
     embed_fn = SentenceTransformerEmbeddingFunction(
         model_name=EMBEDDING_MODEL
@@ -78,7 +77,6 @@ def main():
 
     client = chromadb.PersistentClient(path=CHROMA_DIR)
 
-    # Delete existing collection if re-indexing
     try:
         client.delete_collection(COLLECTION_NAME)
     except Exception:
@@ -90,10 +88,8 @@ def main():
         metadata={"description": "HNS VoC documents with causal signals"}
     )
 
-    # Index documents
     total = build_collection(rows, collection)
     print(f"done: {total} documents in collection '{COLLECTION_NAME}'")
-
 
 if __name__ == "__main__":
     main()

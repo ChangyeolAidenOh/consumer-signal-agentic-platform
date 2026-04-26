@@ -18,11 +18,24 @@ app = FastAPI(
 agent = None
 
 
+import threading
+
+
+def index_voc():
+    """Index VoC documents into ChromaDB in background."""
+    try:
+        from rag.index import main as run_index
+        run_index()
+    except Exception:
+        pass
+
+
 @app.on_event("startup")
 def startup():
-    """Build agent graph once on startup."""
+    """Build agent graph and start background indexing."""
     global agent
     agent = build_graph()
+    threading.Thread(target=index_voc, daemon=True).start()
 
 
 @app.post("/api/v1/analyze", response_model=AnalyzeResponse)

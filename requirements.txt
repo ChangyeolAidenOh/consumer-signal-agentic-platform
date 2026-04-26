@@ -9,3 +9,5 @@ langchain
 langchain-ollama
 fastapi
 uvicorn
+langchain-google-vertexai
+langchain-anthropic

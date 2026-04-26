@@ -24,6 +24,8 @@ services:
       - "8000:8000"
     environment:
       DATABASE_URL: postgresql://hns_user:hns_local_dev_only@postgres:5432/hns_platform
+      LLM_PROVIDER: ${LLM_PROVIDER:-ollama}
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY:-}
       OLLAMA_HOST: http://host.docker.internal:11434
     depends_on:
       postgres:

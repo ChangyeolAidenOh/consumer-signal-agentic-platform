@@ -1,9 +1,15 @@
 FROM python:3.10-slim
-LABEL authors="aiden"
+
 WORKDIR /app
+
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Pre-download Korean embedding model during build
+RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('jhgan/ko-sroberta-multitask')"
+
 COPY . .
 
-CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
+RUN chmod +x startup.sh
+
+CMD ["./startup.sh"]
