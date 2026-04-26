@@ -11,7 +11,6 @@ from pathlib import Path
 
 import pandas as pd
 
-
 FILES_TO_CHECK = [
     ("voc_pipeline/data/processed/hns_causal_signals.csv",    "voc_documents"),
     ("voc_pipeline/data/processed/hns_temporal_signals.csv",  "temporal_signals"),

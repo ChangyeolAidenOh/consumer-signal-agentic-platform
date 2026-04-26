@@ -13,7 +13,6 @@ import chromadb
 from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
 from sqlalchemy import create_engine, text
 
-
 DB_URL = "postgresql://hns_user:hns_local_dev_only@localhost:5433/hns_platform"
 CHROMA_DIR = "./chroma_data"
 COLLECTION_NAME = "hns_voc"

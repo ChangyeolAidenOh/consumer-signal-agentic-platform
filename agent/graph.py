@@ -1,12 +1,12 @@
 """LangGraph agent with Router -> Retriever -> Reporter nodes."""
 
 import os
-from langgraph.graph import StateGraph, END
+
 from langchain_ollama import ChatOllama
+from langgraph.graph import END, StateGraph
 
 from agent.state import AgentState
-from agent.tools import search_voc, query_canned, query_trend
-
+from agent.tools import query_canned, query_trend, search_voc
 
 LLM = ChatOllama(
     model="llama3.1:8b",

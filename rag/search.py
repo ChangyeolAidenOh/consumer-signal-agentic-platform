@@ -15,7 +15,6 @@ import argparse
 import chromadb
 from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
 
-
 CHROMA_DIR = "./chroma_data"
 COLLECTION_NAME = "hns_voc"
 EMBEDDING_MODEL = "jhgan/ko-sroberta-multitask"

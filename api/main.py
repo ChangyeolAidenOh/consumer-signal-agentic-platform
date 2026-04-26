@@ -1,11 +1,11 @@
 """FastAPI application wrapping the HNS agent."""
 import os
+
 from fastapi import FastAPI, HTTPException
 from sqlalchemy import create_engine, text
 
-from api.schemas import AnalyzeRequest, AnalyzeResponse, HealthResponse
 from agent.graph import build_graph
-
+from api.schemas import AnalyzeRequest, AnalyzeResponse, HealthResponse
 
 DB_URL = os.getenv("DATABASE_URL", "postgresql://hns_user:hns_local_dev_only@localhost:5433/hns_platform")
 

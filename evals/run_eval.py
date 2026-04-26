@@ -15,7 +15,6 @@ from pathlib import Path
 
 from agent.graph import build_graph
 
-
 EVAL_PATH = Path("evals/evaluation_set.json")
 RESULT_PATH = Path("evals/eval_results.json")
 

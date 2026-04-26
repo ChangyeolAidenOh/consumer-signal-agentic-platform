@@ -5,8 +5,8 @@ import os
 os.environ["DATABASE_URL"] = "postgresql://hns_user:hns_local_dev_only@localhost:5433/hns_platform"
 
 from fastapi.testclient import TestClient
-from api.main import app
 
+from api.main import app
 
 client = TestClient(app)
 

@@ -12,7 +12,6 @@ from pathlib import Path
 import pandas as pd
 from sqlalchemy import create_engine, text
 
-
 DB_URL = "postgresql://hns_user:hns_local_dev_only@localhost:5433/hns_platform"
 
 # (relative CSV path, target table name)
