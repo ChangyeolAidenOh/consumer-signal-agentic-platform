@@ -1,6 +1,7 @@
 """Basic API tests for CI pipeline."""
 
 import os
+
 import pytest
 
 os.environ["DATABASE_URL"] = "postgresql://hns_user:hns_local_dev_only@localhost:5433/hns_platform"
