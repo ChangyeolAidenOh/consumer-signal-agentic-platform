@@ -6,7 +6,7 @@ from langchain_ollama import ChatOllama
 from langgraph.graph import END, StateGraph
 
 from agent.state import AgentState
-from agent.tools import query_canned, query_trend, search_voc
+from agent.tools import query_canned, search_voc
 
 LLM = ChatOllama(
     model="llama3.1:8b",
