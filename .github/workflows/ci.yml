@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_DB: hns_platform
+          POSTGRES_USER: hns_user
+          POSTGRES_PASSWORD: hns_local_dev_only
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd "pg_isready -U hns_user -d hns_platform"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install ruff pytest httpx
+
+      - name: Lint
+        run: ruff check . --select E,F,I --ignore E501
+
+      - name: Init database schema
+        env:
+          DATABASE_URL: postgresql://hns_user:hns_local_dev_only@localhost:5433/hns_platform
+        run: |
+          PGPASSWORD=hns_local_dev_only psql -h localhost -p 5433 -U hns_user -d hns_platform -f db/schema.sql
+
+      - name: Run tests
+        env:
+          DATABASE_URL: postgresql://hns_user:hns_local_dev_only@localhost:5433/hns_platform
+        run: pytest tests/ -v
