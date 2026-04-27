@@ -7,7 +7,6 @@ from langgraph.graph import END, StateGraph
 from agent.state import AgentState
 from agent.tools import query_canned, search_voc
 
-
 LLM_PROVIDER = os.getenv("LLM_PROVIDER", "ollama")
 
 if LLM_PROVIDER == "anthropic":
