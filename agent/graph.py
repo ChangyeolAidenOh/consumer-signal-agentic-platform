@@ -1,8 +1,8 @@
-"""LangGraph agent with Router -> Retriever -> Reporter nodes."""
+"""LangGraph agent with Router -> Retriever -> Reporter nodes"""
 
 import os
 
-from langgraph.graph import StateGraph, END
+from langgraph.graph import END, StateGraph
 
 from agent.state import AgentState
 from agent.tools import query_canned, search_voc

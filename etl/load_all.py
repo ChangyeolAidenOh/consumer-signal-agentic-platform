@@ -1,13 +1,9 @@
 """
 ETL loader — H&S pipeline CSV files to PostgreSQL.
-
-Usage:
-    docker-compose up -d
-    python etl/load_all.py --data-dir ~/PycharmProjects/pg_hns_project
 """
 
-import os
 import argparse
+import os
 from pathlib import Path
 
 import pandas as pd

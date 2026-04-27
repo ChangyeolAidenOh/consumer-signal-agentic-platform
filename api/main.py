@@ -1,5 +1,6 @@
 """FastAPI application wrapping the HNS agent."""
 import os
+import threading
 
 from fastapi import FastAPI, HTTPException
 from sqlalchemy import create_engine, text
@@ -17,8 +18,6 @@ app = FastAPI(
 
 agent = None
 
-
-import threading
 
 
 def index_voc():
