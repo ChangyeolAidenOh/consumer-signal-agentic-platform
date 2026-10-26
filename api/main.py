@@ -1,8 +1,8 @@
 """FastAPI application wrapping the HNS agent."""
 import os
-import threading
 
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import RedirectResponse
 from sqlalchemy import create_engine, text
 
 from agent.graph import build_graph
@@ -19,22 +19,11 @@ app = FastAPI(
 agent = None
 
 
-
-def index_voc():
-    """Index VoC documents into ChromaDB in background."""
-    try:
-        from rag.index import main as run_index
-        run_index()
-    except Exception:
-        pass
-
-
 @app.on_event("startup")
 def startup():
-    """Build agent graph and start background indexing."""
+    """Build agent graph once on startup."""
     global agent
     agent = build_graph()
-    threading.Thread(target=index_voc, daemon=True).start()
 
 
 @app.post("/api/v1/analyze", response_model=AnalyzeResponse)
@@ -73,3 +62,9 @@ def health():
         return HealthResponse(status="ok", tables=tables, voc_count=voc_count)
     except Exception as e:
         raise HTTPException(status_code=503, detail=str(e))
+
+
+@app.get("/", include_in_schema=False)
+def root():
+    """Redirect the bare service URL to the interactive API docs."""
+    return RedirectResponse(url="/docs")

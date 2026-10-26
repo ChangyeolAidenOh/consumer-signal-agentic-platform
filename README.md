@@ -304,6 +304,16 @@ Note: These accuracy scores measure **router classification** (whether the query
 
 **Result**: Same agent code runs across three LLM backends with no code changes — only environment variable configuration.
 
+### 7. Pre-built Vector Index over Runtime Indexing
+
+**Problem**: The container re-embedded all 1,744 VoC documents in a background thread on every cold start. With the default instance limit this was hidden, because Cloud Run simply launched more instances. Once `max-instances=1` was set for cost control, the single instance stayed CPU-saturated during indexing and every request was rejected with HTTP 429. Request-based CPU allocation made it worse: the background thread barely progressed while no request was being served.
+
+**Solution**: Removed runtime indexing. The ChromaDB index is built once locally and shipped inside the image (`.gcloudignore` includes `chroma_data/` while `.gitignore` keeps it out of Git). `chromadb` is pinned to the version that built the index so the on-disk format matches.
+
+**Result**: Cold starts no longer depend on embedding work, and the service responds immediately after startup under a single-instance cap.
+
+**Takeaway**: Expensive, deterministic preprocessing belongs in the build step, not the request path. A cost limit surfaced a latent design flaw that autoscaling had been masking.
+
 ---
 
 ## API Reference
@@ -351,10 +361,17 @@ The platform is deployed on Cloud Run with:
 - **Compute**: Cloud Run (serverless, asia-northeast3, Seoul)
 - **Database**: Supabase PostgreSQL (free tier, Session Pooler for IPv4 compatibility, Seoul region)
 - **LLM**: Claude Haiku 4.5 via Anthropic API
-- **VoC Embeddings**: ChromaDB in-container with pre-downloaded ko-sroberta-multitask model (built into Docker image to avoid cold-start download delays)
+- **VoC Embeddings**: Pre-built ChromaDB index and ko-sroberta-multitask model both baked into the Docker image, so cold starts perform no embedding work
 - **CI/CD**: GitHub Actions (ruff lint + schema validation + API tests on every push)
 
-**Cost**: ~$0 idle (Cloud Run scales to zero), ~$0.004 per query (LLM token cost). Supabase free tier covers database hosting.
+**Cost controls**:
+- Cloud Run scales to zero and is capped at `max-instances=1`, bounding worst-case spend
+- CPU-only PyTorch build (CUDA libraries are unused on Cloud Run) reduced the image from 3.9 GB to 0.96 GB, cutting registry storage and cold-start pull time
+- Artifact Registry cleanup policy keeps only the 2 most recent images ([`infra/artifact-cleanup-policy.json`](infra/artifact-cleanup-policy.json))
+- Monthly budget alert on the billing account (50% / 90% / 100% thresholds)
+- Supabase free tier pauses after 7 days of inactivity; an external uptime monitor polls `/health` to keep the database active
+
+Expected cost: ~$0 when idle, ~$0.004 per query (LLM tokens), plus well under $1/month of image storage.
 
 ---
 
@@ -460,8 +477,10 @@ consumer-signal-agentic-platform/
 ├── .github/workflows/
 │   └── ci.yml                      # GitHub Actions: ruff lint + pytest on push
 │
-├── Dockerfile                      # Cloud Run container (pre-downloads embedding model)
-├── Dockerfile.local                # Local development Dockerfile (backup)
+├── infra/
+│   └── artifact-cleanup-policy.json  # Artifact Registry retention (keep latest 2)
+├── Dockerfile                      # Cloud Run container (CPU-only PyTorch, model and index baked in)
+├── .gcloudignore                   # Deploy upload rules (includes pre-built chroma_data)
 ├── startup.sh                      # Container entrypoint (uvicorn with PORT)
 ├── docker-compose.yml              # Local: PostgreSQL (5437) + FastAPI (8000)
 ├── requirements.txt                # Python dependencies
@@ -484,6 +503,8 @@ consumer-signal-agentic-platform/
 4. **Single-brand scope**: Currently limited to H&S vs Antitro analysis. The architecture supports multi-brand extension but would require schema changes and additional data collection.
 
 5. **Answer quality varies by LLM**: Llama 3.1 8B (local) produces shorter, sometimes inaccurate answers. Claude Haiku (deployed) is significantly more accurate and detailed. Evaluation results reflect router classification accuracy; deployed answer quality is higher.
+
+6. **Retrieval scope for comparison queries**: VoC search returns the top 5 documents by semantic similarity without metadata filters. For "안티트로와 헤드앤숄더를 직접 비교한 후기의 주요 내용은?", the retrieved documents were single-brand reviews, and the agent correctly reported that no direct comparison was found rather than fabricating one. The answer was grounded but recall was limited. Detecting comparison intent and applying a `competitor_mentioned` filter with a larger k would address this.
 
 ### Planned Improvements
 

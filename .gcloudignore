@@ -1,0 +1,13 @@
+.git/
+.gitignore
+.github/
+.venv/
+__pycache__/
+*.pyc
+.env
+.idea/
+*.zip
+*.csv
+*.xlsx
+.DS_Store
+evals/eval_results.json
