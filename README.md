@@ -502,3 +502,9 @@ consumer-signal-agentic-platform/
 - **[H&S Consumer Signal Detection Pipeline](https://github.com/ChangyeolAidenOh/pg-hns-consumer-signal-pipeline)** — The upstream 3-layer analysis pipeline (VoC NLP × Trend × Switching ML) that generates the data this platform serves
 - **[CNP VoC Pipeline](https://github.com/ChangyeolAidenOh/cnp-voc-pipeline)** — Earlier Korean VoC analysis project (causal signal detection, Streamlit dashboard)
 - **[ANUA Review NLP](https://github.com/ChangyeolAidenOh/anua-review-nlp)** — English-language VoC analysis with Amazon review data
+
+---
+
+## License
+
+This project is licensed under the MIT License — see [LICENSE](LICENSE) for details.
