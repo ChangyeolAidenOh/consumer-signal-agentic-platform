@@ -373,8 +373,8 @@ The platform is deployed on Cloud Run with:
 git clone https://github.com/ChangyeolAidenOh/consumer-signal-agentic-platform.git
 cd consumer-signal-agentic-platform
 
-# Start PostgreSQL (runs on port 5433 to avoid conflict with local postgres)
-docker-compose up -d
+# Start PostgreSQL (runs on port 5437 to avoid conflict with other local containers)
+docker compose up -d
 
 # Python environment
 python3 -m venv .venv
@@ -415,13 +415,11 @@ python -m evals.run_eval
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| DATABASE_URL | postgresql://...@localhost:5433/... | PostgreSQL connection string |
+| DATABASE_URL | postgresql://...@localhost:5437/... | PostgreSQL connection string |
 | LLM_PROVIDER | ollama | LLM backend: `ollama`, `gemini`, or `anthropic` |
 | OLLAMA_HOST | http://localhost:11434 | Ollama server URL (when LLM_PROVIDER=ollama) |
 | GOOGLE_API_KEY | — | Google AI Studio API key (when LLM_PROVIDER=gemini) |
 | ANTHROPIC_API_KEY | — | Anthropic API key (when LLM_PROVIDER=anthropic) |
-| GCP_PROJECT | — | GCP project ID (when using Vertex AI) |
-| GCP_LOCATION | — | GCP region (when using Vertex AI) |
 
 ---
 
@@ -465,7 +463,7 @@ consumer-signal-agentic-platform/
 ├── Dockerfile                      # Cloud Run container (pre-downloads embedding model)
 ├── Dockerfile.local                # Local development Dockerfile (backup)
 ├── startup.sh                      # Container entrypoint (uvicorn with PORT)
-├── docker-compose.yml              # Local: PostgreSQL (5433) + FastAPI (8000)
+├── docker-compose.yml              # Local: PostgreSQL (5437) + FastAPI (8000)
 ├── requirements.txt                # Python dependencies
 ├── .env.example                    # Environment variable template
 └── .gitignore

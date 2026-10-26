@@ -8,7 +8,7 @@ from sqlalchemy import create_engine, text
 from agent.graph import build_graph
 from api.schemas import AnalyzeRequest, AnalyzeResponse, HealthResponse
 
-DB_URL = os.getenv("DATABASE_URL", "postgresql://hns_user:hns_local_dev_only@localhost:5433/hns_platform")
+DB_URL = os.getenv("DATABASE_URL", "postgresql://hns_user:hns_local_dev_only@localhost:5437/hns_platform")
 
 app = FastAPI(
     title="HNS Consumer Signal Agent API",
