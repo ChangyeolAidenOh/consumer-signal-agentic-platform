@@ -229,6 +229,19 @@ CANNED_QUERIES = {
                current_antitro_ratio, current_hns_momentum
         FROM timeline_analysis
     """,
+    "churn_by_competitor": """
+        SELECT competitor_mentioned,
+               COUNT(*) AS docs,
+               SUM(CASE WHEN signal_type = '이탈위험' THEN 1 ELSE 0 END) AS labeled_churn_docs,
+               ROUND(100.0 * SUM(CASE WHEN signal_type = '이탈위험' THEN 1 ELSE 0 END) / COUNT(*), 1) AS labeled_churn_pct,
+               SUM(CASE WHEN regexp_replace(regexp_replace(churn_signals, '안티트로|니조랄', '', 'g'), '[^가-힣A-Za-z0-9]', '', 'g') <> ''
+                        THEN 1 ELSE 0 END) AS docs_with_non_brand_churn_signal,
+               ROUND(100.0 * SUM(CASE WHEN regexp_replace(regexp_replace(churn_signals, '안티트로|니조랄', '', 'g'), '[^가-힣A-Za-z0-9]', '', 'g') <> ''
+                        THEN 1 ELSE 0 END) / COUNT(*), 1) AS non_brand_churn_signal_pct
+        FROM voc_documents
+        GROUP BY competitor_mentioned
+        ORDER BY competitor_mentioned
+    """,
     "lda_coherence": """
         SELECT source, mode, optimal_k, coherence, keywords
         FROM lda_topics

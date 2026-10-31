@@ -52,6 +52,10 @@ def router(state: AgentState) -> AgentState:
     if any(kw in q for kw in switching_kw):
         return {**state, "query_type": "switching"}
 
+    # mixed: churn-reason questions need VoC excerpts plus the churn breakdown
+    if "이탈" in q and any(kw in q for kw in ["이유", "원인", "왜"]):
+        return {**state, "query_type": "mixed"}
+
     # trend: search volume and timeline questions
     trend_kw = ["검색량", "역전", "ratio", "비율", "추이", "모멘텀", "momentum",
                 "forecast", "예측", "카테고리 클릭", "닥터그루트", "케라시스", "팬틴",
@@ -146,6 +150,9 @@ def retriever(state: AgentState) -> AgentState:
     if query_type == "mixed":
         sql_result = query_canned("voc_overview") + "\n\n" + sql_result
 
+    if query_type in ("voc", "mixed") and "경쟁사" in query and "이탈" in query:
+        sql_result = sql_result + "\n\n" + query_canned("churn_by_competitor")
+
     return {**state, "retrieved_docs": retrieved_docs, "sql_result": sql_result}
 
 
@@ -183,6 +190,9 @@ Interpretation rules:
 
 Format rules:
 - Brand names exactly: 헤드앤숄더, 안티트로, 니조랄. Write Antitro as 안티트로.
+- Units: VoC rows are documents (건), never people (명). Segment sizes are document counts.
+- Do not expose internal column or metric names such as mention_both_antitro_and_hns or p_switch; describe them in plain language.
+- Use "검색된 문서 중에서는" only when a VoC excerpts section is present in the data.
 - No markdown headings (#). Bold text and short bullet lists are fine.
 - Be concise: up to 6 sentences or a short bullet list. Cite specific numbers and months. When the data cannot answer, say what is missing.
 
