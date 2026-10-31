@@ -44,7 +44,7 @@ This platform solves that by:
 
 The result: a stakeholder can type "안티트로가 헤드앤숄더를 역전한 시점은 언제야?" and get back "2025년 6월 기준으로 역전, ratio 1.027" — sourced directly from the data, not hallucinated.
 
-A cross-layer SQL query immediately confirms the data: competitor-mentioned VoC documents show an 82.2% churn rate vs 20.4% for non-competitor documents — a 4:1 signal gap that the agent surfaces through both SQL aggregation and VoC semantic search.
+A note on one headline figure from the upstream analysis: competitor-mentioned VoC documents show an 82.2% churn-label rate vs 20.4% for others, but the upstream signal detector counts competitor brand names themselves as churn keywords, so much of that gap is definitional. With brand names excluded, churn-signal presence is 38.6% vs 30.9% (not statistically significant at n=101). See [Known Limitations](#known-limitations-and-future-work) item 7.
 
 ---
 
@@ -159,7 +159,7 @@ The reporter generates Korean-language answers grounded in retrieved data. The s
 | PostgreSQL | Structured queries, aggregation, cross-layer JOINs | 10 tables, 3,694 rows |
 | ChromaDB | Semantic similarity search over VoC text | 1,744 documents, ko-sroberta-multitask embeddings |
 
-**Why two stores?** "경쟁사 언급 이탈률은?" requires SQL aggregation (`GROUP BY competitor_mentioned` → 82.2% vs 20.4%). "안티트로 비교한 사람들은 뭐라고 말했어?" requires semantic search across 1,744 documents. Neither store alone can answer both. This dual-store architecture enables the agent to combine **statistical evidence** (SQL) with **qualitative evidence** (VoC) in a single response.
+**Why two stores?** "경쟁사 언급 이탈률은?" requires SQL aggregation (`GROUP BY competitor_mentioned`). "안티트로 비교한 사람들은 뭐라고 말했어?" requires semantic search across 1,744 documents. Neither store alone can answer both. This dual-store architecture enables the agent to combine **statistical evidence** (SQL) with **qualitative evidence** (VoC) in a single response.
 
 ### PostgreSQL Schema (10 tables)
 
@@ -505,6 +505,8 @@ consumer-signal-agentic-platform/
 5. **Answer quality varies by LLM**: Llama 3.1 8B (local) produces shorter, sometimes inaccurate answers. Claude Haiku (deployed) is significantly more accurate and detailed. Evaluation results reflect router classification accuracy; deployed answer quality is higher.
 
 6. **Retrieval scope for comparison queries**: VoC search returns the top 5 documents by semantic similarity without metadata filters. For "안티트로와 헤드앤숄더를 직접 비교한 후기의 주요 내용은?", the retrieved documents were single-brand reviews, and the agent correctly reported that no direct comparison was found rather than fabricating one. The answer was grounded but recall was limited. Detecting comparison intent and applying a `competitor_mentioned` filter with a larger k would address this.
+
+7. **Upstream label circularity (found 2026-10-31)**: The upstream causal signal detector includes the competitor brand names 안티트로 and 니조랄 in its churn keyword list. Of the 83 competitor-mentioning documents labeled 이탈위험, 44 have no churn evidence other than the brand name, and the Active Switcher segment (83 docs) is exactly this labeled set. The widely cited 82.2% vs 20.4% churn gap is therefore largely a consequence of the labeling rule; with brand names excluded, churn-signal presence is 38.6% vs 30.9% (z ≈ 1.6, p ≈ 0.1). Two documents mentioning both brands turned out to be templated promotional posts, one of them clearly positive about H&S yet labeled 이탈위험. Related data facts: VoC "documents" are search-API excerpts (median ~140 characters), not full reviews, so chunking is unnecessary and long-context content such as direct comparisons is structurally unlikely to appear. Correcting the upstream labeling and re-running segmentation is planned; until then the agent is instructed to present the 82.2% figure together with its definitional caveat. Investigation record: `docs/investigations/2026-10-31-answer-quality-and-label-circularity.md`.
 
 ### Planned Improvements
 

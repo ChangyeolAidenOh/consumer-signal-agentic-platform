@@ -57,8 +57,8 @@
     "id": 7,
     "query": "경쟁사를 언급한 소비자의 이탈률은 얼마야?",
     "expected_type": "voc",
-    "reference": "82.2% vs 비언급 20.4%",
-    "eval_criteria": "must mention ~82% vs ~20% contrast",
+    "reference": "라벨 기준 82.2% vs 20.4%. 단, 경쟁사 브랜드명이 이탈 키워드에 포함되어 있어 상당 부분 정의에서 나온 격차이며, 브랜드명 제외 시 이탈 신호 출현율은 38.6% vs 30.9%",
+    "eval_criteria": "must report the label-based figures and also state the definitional caveat (brand names counted as churn keywords) or the brand-excluded comparison",
     "eval_category": "fact_checking",
     "eval_strategy": "data_retrieval"
   },
