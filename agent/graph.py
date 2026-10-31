@@ -94,7 +94,11 @@ def retriever(state: AgentState) -> AgentState:
         retrieved_docs = search_voc(query, n_results=5)
 
     if query_type == "switching":
-        sql_result = query_canned("segment_summary")
+        sql_result = "\n\n".join([
+            query_canned("segment_summary"),
+            query_canned("product_line_status"),
+            query_canned("timeline_facts"),
+        ])
 
     elif query_type == "trend":
         sql_result = query_canned("antitro_timeline")
@@ -135,8 +139,13 @@ def retriever(state: AgentState) -> AgentState:
 
     elif query_type == "voc":
         q = query.lower()
+        parts = [query_canned("voc_overview")]
         if any(kw in q for kw in ["이탈", "불만", "이유", "원인"]):
-            sql_result = query_canned("churn_reasons")
+            parts.append(query_canned("churn_reasons"))
+        sql_result = "\n\n".join(parts)
+
+    if query_type == "mixed":
+        sql_result = query_canned("voc_overview") + "\n\n" + sql_result
 
     return {**state, "retrieved_docs": retrieved_docs, "sql_result": sql_result}
 
@@ -147,35 +156,43 @@ def reporter(state: AgentState) -> AgentState:
 
     if state.get("retrieved_docs"):
         context_parts.append(
-            f"=== VoC Documents ===\n{state['retrieved_docs']}"
+            "=== VoC excerpts: top 5 by semantic similarity, drawn from 1,744 search-result excerpts (a SAMPLE, not the dataset) ===\n"
+            f"{state['retrieved_docs']}"
         )
     if state.get("sql_result"):
         context_parts.append(
-            f"=== Data from Database ===\n{state['sql_result']}"
+            "=== Dataset-level figures and query results (authoritative for whole-dataset statements) ===\n"
+            f"{state['sql_result']}"
         )
 
     context = "\n\n".join(context_parts) if context_parts else "No data retrieved."
 
-    prompt = f"""You are an analyst for Head & Shoulders (P&G Korea).
-    Answer the user's question based ONLY on the provided data.
-    Answer in Korean.
+    prompt = f"""You are an analyst for Head & Shoulders (P&G Korea). Answer in Korean.
 
-    Critical rules for interpreting the data:
-    - The "ratio" column = Antitro / HNS. When ratio > 1.0, Antitro has SURPASSED HNS. When ratio < 1.0, HNS is still ahead.
-    - Dates in the data use month-end format (e.g. "2025-06-30" means June 2025, NOT a specific day). Never say "X월 30일 현재". Say "X월 기준" instead.
-    - In VoC documents, signal=이탈위험 means the consumer is showing churn risk. churn_score > 0 means churn signals detected. competitor=True means they mentioned a competing brand.
-    - Do NOT contradict the data. If VoC documents show complaints, report them as complaints.
+Evidence rules:
+- Use only the provided data as evidence. Do not invent figures.
+- The VoC section is a sample of 5 excerpts selected by similarity to the question. Never conclude what the whole dataset contains or lacks from this sample. Use "검색된 문서 중에서는" for sample-level observations. Make dataset-wide statements only from the dataset-level section.
+- VoC texts are search-result excerpts of roughly 70 to 190 characters, not full reviews. Long-form content such as direct product comparisons is unlikely to appear in them.
+- The upstream labeling counts the competitor brand names 안티트로 and 니조랄 themselves as churn keywords. Churn rates for competitor-mentioning documents (for example 82.2%) are therefore partly definitional. Whenever you cite them, state this caveat and do not present them as evidence that mentioning a competitor causes churn.
 
-    Format rules:
-    - Cite specific numbers and months from the data
-    - Keep the answer concise (3-5 sentences)
+Interpretation rules:
+- ratio = Antitro / HNS. ratio >= 1.0 means Antitro has surpassed HNS; ratio < 1.0 means HNS is ahead. Use the status column when present.
+- Dates use month-end format ("2025-06-30" means June 2025). Say "X월 기준", never "X월 30일 현재".
+- signal=이탈위험 is a churn-risk label; competitor=True means a competing brand was mentioned.
+- Before recommending action on a product line, check product_line_status. Do not recommend strengthening a line whose status is NO_SEARCH_VOLUME or COLLAPSED; report the status instead.
+- If the question presupposes a conclusion (for example "~겠네?", "~맞지?"), evaluate the premise against the data. Do not upgrade the data's wording: 권장 is not 필수, 가능성 is not 확실.
 
-    Data:
-    {context}
+Format rules:
+- Brand names exactly: 헤드앤숄더, 안티트로, 니조랄. Write Antitro as 안티트로.
+- No markdown headings (#). Bold text and short bullet lists are fine.
+- Be concise: up to 6 sentences or a short bullet list. Cite specific numbers and months. When the data cannot answer, say what is missing.
 
-    Question: {state['query']}
+Data:
+{context}
 
-    Answer:"""
+Question: {state['query']}
+
+Answer:"""
 
     response = LLM.invoke(prompt)
     return {**state, "final_answer": response.content}

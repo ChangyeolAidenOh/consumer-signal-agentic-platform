@@ -168,6 +168,67 @@ CANNED_QUERIES = {
         GROUP BY 1
         ORDER BY cnt DESC NULLS FIRST
         """,
+    "voc_overview": """
+        SELECT metric, value FROM (
+            SELECT 1 AS ord, 'total_excerpts' AS metric, COUNT(*)::TEXT AS value
+            FROM voc_documents
+            UNION ALL
+            SELECT 2, 'median_excerpt_length_chars',
+                   ROUND((PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY LENGTH(raw_text)))::NUMERIC)::TEXT
+            FROM voc_documents
+            UNION ALL
+            SELECT 3, 'source_' || source, COUNT(*)::TEXT FROM voc_documents GROUP BY source
+            UNION ALL
+            SELECT 4, 'labeled_' || signal_type, COUNT(*)::TEXT FROM voc_documents GROUP BY signal_type
+            UNION ALL
+            SELECT 5, 'competitor_mentioned_true', COUNT(*)::TEXT
+            FROM voc_documents WHERE competitor_mentioned
+            UNION ALL
+            SELECT 6, 'mention_both_antitro_and_hns', COUNT(*)::TEXT
+            FROM voc_documents
+            WHERE raw_text LIKE '%안티트로%'
+              AND (raw_text LIKE '%헤드앤숄더%' OR raw_text LIKE '%헤숄%')
+        ) sub
+        ORDER BY ord, metric
+    """,
+    "product_line_status": """
+        SELECT product_line, avg_2021, latest_value,
+               CASE WHEN latest_value = 0 THEN 'NO_SEARCH_VOLUME'
+                    WHEN avg_2021 > 0 AND latest_value < avg_2021 * 0.2 THEN 'COLLAPSED'
+                    WHEN latest_value < avg_2021 THEN 'DECLINING'
+                    ELSE 'GROWING' END AS status
+        FROM (
+            SELECT 'HNS Core (헤드앤숄더샴푸)' AS product_line,
+                   ROUND(AVG(CASE WHEN date LIKE '2021%' THEN "헤드앤숄더샴푸" END)::NUMERIC, 1) AS avg_2021,
+                   ROUND(MAX(CASE WHEN date = (SELECT MAX(date) FROM trend_monthly) THEN "헤드앤숄더샴푸" END)::NUMERIC, 1) AS latest_value
+            FROM trend_monthly
+            UNION ALL
+            SELECT 'HNS Clinical Strength',
+                   ROUND(AVG(CASE WHEN date LIKE '2021%' THEN "헤드앤숄더클리니컬스트렝스" END)::NUMERIC, 1),
+                   ROUND(MAX(CASE WHEN date = (SELECT MAX(date) FROM trend_monthly) THEN "헤드앤숄더클리니컬스트렝스" END)::NUMERIC, 1)
+            FROM trend_monthly
+            UNION ALL
+            SELECT 'HNS Charcoal',
+                   ROUND(AVG(CASE WHEN date LIKE '2021%' THEN "헤드앤숄더차콜" END)::NUMERIC, 1),
+                   ROUND(MAX(CASE WHEN date = (SELECT MAX(date) FROM trend_monthly) THEN "헤드앤숄더차콜" END)::NUMERIC, 1)
+            FROM trend_monthly
+            UNION ALL
+            SELECT 'HNS Professional',
+                   ROUND(AVG(CASE WHEN date LIKE '2021%' THEN "헤드앤숄더프로페셔널" END)::NUMERIC, 1),
+                   ROUND(MAX(CASE WHEN date = (SELECT MAX(date) FROM trend_monthly) THEN "헤드앤숄더프로페셔널" END)::NUMERIC, 1)
+            FROM trend_monthly
+            UNION ALL
+            SELECT 'Antitro (안티트로샴푸)',
+                   ROUND(AVG(CASE WHEN date LIKE '2021%' THEN "안티트로샴푸" END)::NUMERIC, 1),
+                   ROUND(MAX(CASE WHEN date = (SELECT MAX(date) FROM trend_monthly) THEN "안티트로샴푸" END)::NUMERIC, 1)
+            FROM trend_monthly
+        ) sub
+    """,
+    "timeline_facts": """
+        SELECT antitro_first_entry, antitro_reversal_point, antitro_acceleration_point,
+               current_antitro_ratio, current_hns_momentum
+        FROM timeline_analysis
+    """,
     "lda_coherence": """
         SELECT source, mode, optimal_k, coherence, keywords
         FROM lda_topics
@@ -194,3 +255,8 @@ def query_canned(query_name: str) -> str:
         available = ", ".join(CANNED_QUERIES.keys())
         return f"unknown query. available: {available}"
     return query_trend(CANNED_QUERIES[query_name])
+
+
+def warm_up() -> None:
+    """Load the embedding model and open the collection ahead of the first query."""
+    _get_collection()

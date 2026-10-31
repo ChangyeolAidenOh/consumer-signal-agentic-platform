@@ -6,6 +6,7 @@ from fastapi.responses import RedirectResponse
 from sqlalchemy import create_engine, text
 
 from agent.graph import build_graph
+from agent.tools import warm_up
 from api.schemas import AnalyzeRequest, AnalyzeResponse, HealthResponse
 
 DB_URL = os.getenv("DATABASE_URL", "postgresql://hns_user:hns_local_dev_only@localhost:5437/hns_platform")
@@ -24,6 +25,7 @@ def startup():
     """Build agent graph once on startup."""
     global agent
     agent = build_graph()
+    warm_up()
 
 
 @app.post("/api/v1/analyze", response_model=AnalyzeResponse)
