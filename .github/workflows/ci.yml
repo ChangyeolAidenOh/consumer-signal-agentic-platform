@@ -50,4 +50,5 @@ jobs:
       - name: Run tests
         env:
           DATABASE_URL: postgresql://hns_user:hns_local_dev_only@localhost:5433/hns_platform
+          LLM_PROVIDER: ollama
         run: pytest tests/ -v
