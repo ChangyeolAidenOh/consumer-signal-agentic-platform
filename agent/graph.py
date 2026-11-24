@@ -121,6 +121,7 @@ def retriever(state: AgentState) -> AgentState:
     if query_type == "switching":
         sql_result = "\n\n".join([
             query_canned("segment_summary"),
+            query_canned("segment_overall"),
             query_canned("product_line_status"),
             query_canned("timeline_facts"),
         ])
@@ -175,7 +176,12 @@ def retriever(state: AgentState) -> AgentState:
         sql_result = "\n\n".join(parts)
 
     if query_type == "mixed":
-        sql_result = query_canned("voc_overview") + "\n\n" + sql_result
+        # Dataset overview first, product line status last: strategy questions
+        # routed here must see line status before recommending a line.
+        sql_result = (
+            query_canned("voc_overview") + "\n\n" + sql_result
+            + "\n\n" + query_canned("product_line_status")
+        )
 
     if query_type in ("voc", "mixed") and "경쟁사" in query and "이탈" in query:
         sql_result = sql_result + "\n\n" + query_canned("churn_by_competitor")

@@ -114,12 +114,22 @@ def query_trend(sql: str) -> str:
 # Pre-built queries for common questions
 CANNED_QUERIES = {
     "segment_summary": """
-        SELECT s.segment, s.n_docs, s.churn_rate, s.competitor_rate,
+        SELECT s.segment, s.n_docs,
+               ROUND(100.0 * s.n_docs / SUM(s.n_docs) OVER (), 1) AS share_pct,
+               s.churn_rate, s.competitor_rate,
                s.switching_probability AS p_switch,
                i.risk_level, i.intervention_timing, i.recommended_action
         FROM segment_summary s
         JOIN switching_implications i ON s.segment = i.segment
         ORDER BY s.switching_probability DESC
+    """,
+    "segment_overall": """
+        SELECT SUM(n_docs) AS total_docs,
+               ROUND((SUM(n_docs * switching_probability) / SUM(n_docs))::NUMERIC, 3)
+                   AS doc_weighted_avg_p_switch,
+               ROUND((SUM(n_docs * churn_rate) / SUM(n_docs))::NUMERIC, 3)
+                   AS doc_weighted_avg_churn_rate
+        FROM segment_summary
     """,
     "antitro_timeline": """
         SELECT date, hns_core, antitro, ratio,
