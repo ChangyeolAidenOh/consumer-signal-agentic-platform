@@ -17,3 +17,5 @@ class HealthResponse(BaseModel):
     status: str
     tables: int
     voc_count: int
+    llm_provider: str
+    llm_model: str

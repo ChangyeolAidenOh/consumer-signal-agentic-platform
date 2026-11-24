@@ -6,6 +6,8 @@ import chromadb
 from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
 from sqlalchemy import create_engine, text
 
+import agent.config  # noqa: F401  loads .env before DATABASE_URL is read below
+
 DB_URL = os.getenv("DATABASE_URL", "postgresql://hns_user:hns_local_dev_only@localhost:5437/hns_platform")
 CHROMA_DIR = "./chroma_data"
 COLLECTION_NAME = "hns_voc"
@@ -226,6 +228,7 @@ CANNED_QUERIES = {
     """,
     "timeline_facts": """
         SELECT antitro_first_entry, antitro_reversal_point, antitro_acceleration_point,
+               LEFT((SELECT MAX(date) FROM trend_monthly), 7) AS current_month,
                current_antitro_ratio, current_hns_momentum
         FROM timeline_analysis
     """,

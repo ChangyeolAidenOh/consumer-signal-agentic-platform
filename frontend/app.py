@@ -142,6 +142,10 @@ def render_sidebar(api_url: str, remaining: int) -> None:
         if health and health.get("status") == "ok":
             voc_count = health.get("voc_count", 0)
             st.success(f"정상 운영 중입니다. VoC 문서 {voc_count:,}건이 연결되어 있습니다.")
+            provider = health.get("llm_provider")
+            model = health.get("llm_model")
+            if provider and model:
+                st.caption(f"답변 모델: {provider} / {model}")
         else:
             st.warning("서버를 준비하는 중입니다. 첫 질문은 평소보다 오래 걸릴 수 있습니다.")
 

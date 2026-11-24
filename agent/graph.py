@@ -1,27 +1,48 @@
 """LangGraph agent with Router -> Retriever -> Reporter nodes"""
 
-import os
-
 from langgraph.graph import END, StateGraph
 
+from agent.config import ANTHROPIC_API_KEY, LLM_MODEL, LLM_PROVIDER, OLLAMA_HOST
 from agent.state import AgentState
 from agent.tools import query_canned, search_voc
 
-LLM_PROVIDER = os.getenv("LLM_PROVIDER", "ollama")
-
 if LLM_PROVIDER == "anthropic":
     from langchain_anthropic import ChatAnthropic
+    # Do not set temperature/top_p/top_k: Claude 5.5 models reject non-default values.
+    # max_tokens covers thinking tokens as well, so keep headroom above the answer length.
     LLM = ChatAnthropic(
-        model="claude-haiku-4-5-20251001",
-        api_key=os.getenv("ANTHROPIC_API_KEY"),
+        model=LLM_MODEL,
+        api_key=ANTHROPIC_API_KEY,
+        max_tokens=4096,
     )
 else:
     from langchain_ollama import ChatOllama
     LLM = ChatOllama(
-        model="llama3.1:8b",
+        model=LLM_MODEL,
         temperature=0,
-        base_url=os.getenv("OLLAMA_HOST", "http://localhost:11434"),
+        base_url=OLLAMA_HOST,
     )
+
+
+def _response_text(response) -> str:
+    """Return the text of an LLM response.
+
+    Models with thinking enabled return content as a list of blocks
+    (thinking, text, ...); older models return a plain string.
+    """
+    content = response.content
+    if isinstance(content, str):
+        return content
+    parts = []
+    for block in content:
+        if isinstance(block, dict):
+            if block.get("type") == "text":
+                parts.append(block.get("text", ""))
+        elif isinstance(block, str):
+            parts.append(block)
+    return "".join(parts)
+
+
 def router(state: AgentState) -> AgentState:
     """Hybrid router: keyword match first, LLM fallback for ambiguous queries."""
     q = state["query"].lower()
@@ -78,12 +99,13 @@ Query: {q}
 Answer with ONE word:"""
 
     response = LLM.invoke(prompt)
-    query_type = response.content.strip().lower().strip('"')
+    query_type = _response_text(response).strip().lower().strip('"')
 
     if query_type not in ("voc", "trend", "switching", "mixed", "methodology"):
         query_type = "mixed"
 
     return {**state, "query_type": query_type}
+
 
 def retriever(state: AgentState) -> AgentState:
     """Retrieve relevant data based on query type and content."""
@@ -104,7 +126,12 @@ def retriever(state: AgentState) -> AgentState:
         ])
 
     elif query_type == "trend":
-        sql_result = query_canned("antitro_timeline")
+        # Product line status travels with every trend answer so that questions
+        # about strengthening a specific line are checked against its status.
+        sql_result = "\n\n".join([
+            query_canned("antitro_timeline"),
+            query_canned("product_line_status"),
+        ])
 
     elif query_type == "methodology":
         q = query.lower()
@@ -179,14 +206,15 @@ Evidence rules:
 - Use only the provided data as evidence. Do not invent figures.
 - The VoC section is a sample of 5 excerpts selected by similarity to the question. Never conclude what the whole dataset contains or lacks from this sample. Use "검색된 문서 중에서는" for sample-level observations. Make dataset-wide statements only from the dataset-level section.
 - VoC texts are search-result excerpts of roughly 70 to 190 characters, not full reviews. Long-form content such as direct product comparisons is unlikely to appear in them.
-- The upstream labeling counts the competitor brand names 안티트로 and 니조랄 themselves as churn keywords. Churn rates for competitor-mentioning documents (for example 82.2%) are therefore partly definitional. Whenever you cite them, state this caveat and do not present them as evidence that mentioning a competitor causes churn.
+- The upstream labeling counts the competitor brand names 안티트로 and 니조랄 themselves as churn keywords. Churn rates for competitor-mentioning documents are therefore partly definitional. Whenever you cite them, state this caveat and do not present them as evidence that mentioning a competitor causes churn.
+- When the competitor cross-tab also provides a churn-signal rate computed with the brand names removed, always report it next to the labeled rate for both groups, phrased as "브랜드명을 제외하면 X% 대 Y%" with the figures taken from that table. That brand-excluded comparison is the non-definitional one and must not be omitted. Do not mention these competitor figures at all when the cross-tab is not in the data.
 
 Interpretation rules:
 - ratio = Antitro / HNS. ratio >= 1.0 means Antitro has surpassed HNS; ratio < 1.0 means HNS is ahead. Use the status column when present.
 - Dates use month-end format ("2025-06-30" means June 2025). Say "X월 기준", never "X월 30일 현재".
 - signal=이탈위험 is a churn-risk label; competitor=True means a competing brand was mentioned.
-- Before recommending action on a product line, check product_line_status. Do not recommend strengthening a line whose status is NO_SEARCH_VOLUME or COLLAPSED; report the status instead.
-- If the question presupposes a conclusion (for example "~겠네?", "~맞지?"), evaluate the premise against the data. Do not upgrade the data's wording: 권장 is not 필수, 가능성 is not 확실.
+- Before recommending action on a product line, check the product line status figures. Do not recommend strengthening a line whose status is NO_SEARCH_VOLUME or COLLAPSED; report the status instead.
+- If the question presupposes a conclusion (for example "~겠네?", "~맞지?"), evaluate the premise against the data. Do not upgrade the data's wording: 권장 is not 필수, 가 능성 is not 확실.
 
 Format rules:
 - Brand names exactly: 헤드앤숄더, 안티트로, 니조랄. Write Antitro as 안티트로.
@@ -204,7 +232,7 @@ Question: {state['query']}
 Answer:"""
 
     response = LLM.invoke(prompt)
-    return {**state, "final_answer": response.content}
+    return {**state, "final_answer": _response_text(response)}
 
 
 def build_graph():

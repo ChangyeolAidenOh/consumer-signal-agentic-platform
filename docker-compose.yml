@@ -23,9 +23,11 @@ services:
     ports:
       - "8000:8000"
     environment:
+      PORT: 8000
       DATABASE_URL: postgresql://hns_user:hns_local_dev_only@postgres:5432/hns_platform
-      LLM_PROVIDER: ${LLM_PROVIDER:-ollama}
-      GOOGLE_API_KEY: ${GOOGLE_API_KEY:-}
+      LLM_PROVIDER: ${LLM_PROVIDER:?LLM_PROVIDER must be set (anthropic or ollama)}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      ANTHROPIC_MODEL: ${ANTHROPIC_MODEL:-claude-sonnet-5-5}
       OLLAMA_HOST: http://host.docker.internal:11434
     depends_on:
       postgres:
