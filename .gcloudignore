@@ -13,3 +13,4 @@ __pycache__/
 evals/eval_results.json
 frontend/
 .streamlit/
+evals/smoke/
